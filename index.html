@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>Pear Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f5f5f7; --tile:#fbfbfd; --card:#ffffff;
+  --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b; --line:#d2d2d7;
+  --accent:#0071e3; --accent-h:#0077ed; --link:#0066cc;
+  --nav:rgba(250,250,252,.8); --dark:#000; --dark-ink:#f5f5f7;
+  --ok:#1a8f3c; --warn:#bf4800; --shadow:0 4px 24px rgba(0,0,0,.08);
+  --r:18px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","Inter",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#000; --bg2:#101012; --tile:#161617; --card:#1c1c1e;
+  --ink:#f5f5f7; --ink2:#a1a1a6; --ink3:#86868b; --line:#38383c;
+  --accent:#0a84ff; --accent-h:#2997ff; --link:#2997ff;
+  --nav:rgba(22,22,23,.8); --dark:#161617; --shadow:0 4px 24px rgba(0,0,0,.5);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#000; --bg2:#101012; --tile:#161617; --card:#1c1c1e;
+  --ink:#f5f5f7; --ink2:#a1a1a6; --ink3:#86868b; --line:#38383c;
+  --accent:#0a84ff; --accent-h:#2997ff; --link:#2997ff;
+  --nav:rgba(22,22,23,.8); --dark:#161617; --shadow:0 4px 24px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.47;letter-spacing:-.022em;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;letter-spacing:-.015em}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:22px}
+@media(max-width:600px){.wrap{padding-inline:16px}}
+.num{font-variant-numeric:tabular-nums}
+.svgdefs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* nav */
+.gnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid color-mix(in srgb,var(--line) 50%,transparent)}
+.gnav .wrap{display:flex;align-items:center;gap:6px;height:48px}
+.logo{display:flex;align-items:center;gap:7px;color:var(--ink);font-weight:600;font-size:17px;white-space:nowrap}
+.logo:hover{text-decoration:none}
+.logo svg{width:20px;height:22px}
+.navcats{display:flex;gap:2px;flex:1;justify-content:center;overflow:hidden}
+.navcats a{color:var(--ink);opacity:.8;font-size:12px;padding:6px 8px;white-space:nowrap;border-radius:8px}
+.navcats a:hover{opacity:1;text-decoration:none}
+.navcats a.on{opacity:1;font-weight:600}
+.navtools{display:flex;align-items:center;gap:2px;margin-left:auto}
+.ib{position:relative;background:none;border:0;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
+.ib:hover{background:var(--bg2)}
+.ib svg{width:18px;height:18px}
+.badge{position:absolute;top:3px;right:1px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;line-height:16px;text-align:center}
+.lang{display:flex;background:var(--bg2);border-radius:999px;padding:2px;margin-left:4px}
+.lang button{border:0;background:none;font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;color:var(--ink2)}
+.lang button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.burger{display:none}
+@media(max-width:1060px){.navcats{display:none}.burger{display:grid}}
+.mobmenu{background:var(--bg);border-bottom:1px solid var(--line)}
+.mobmenu .wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px;padding-block:12px}
+.mobmenu a{color:var(--ink);padding:10px 8px;border-radius:10px;font-size:15px}
+.mobmenu a:hover{background:var(--bg2);text-decoration:none}
+
+.searchbar{background:var(--bg);border-bottom:1px solid var(--line)}
+.searchbar .wrap{padding-block:14px;display:flex;gap:10px;align-items:center}
+.searchbar input{flex:1;border:0;background:var(--bg2);border-radius:12px;padding:12px 16px;font-size:17px;outline:none;min-width:0}
+.searchbar input:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+
+.ribbon{background:var(--bg2);text-align:center;font-size:14px;padding:10px 16px;color:var(--ink)}
+
+/* hero + tiles */
+.hero{text-align:center;padding-block:56px 36px}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.hero p{font-size:clamp(19px,2.4vw,24px);color:var(--ink2);margin:14px auto 0;max-width:640px}
+.eyebrow{font-size:14px;color:var(--warn);font-weight:600;letter-spacing:0;margin-bottom:6px}
+.shopcats{display:flex;gap:26px;overflow-x:auto;padding-block:8px 28px;scrollbar-width:none;justify-content:flex-start}
+.shopcats::-webkit-scrollbar{display:none}
+.shopcats a{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink);font-size:14px;font-weight:500;min-width:92px;text-align:center}
+.shopcats a:hover{text-decoration:none}
+.shopcats .ci{width:92px;height:72px;display:grid;place-items:center}
+.shopcats .ci svg{width:80px;height:72px}
+.shopcats a:hover .ci{transform:translateY(-3px);transition:transform .2s}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.tile{position:relative;border-radius:var(--r);overflow:hidden;background:var(--tile);text-align:center;padding:44px 24px 0;min-height:520px;display:flex;flex-direction:column;align-items:center}
+.tile.full{grid-column:1/-1;min-height:560px}
+.tile.dark{background:var(--dark);color:var(--dark-ink)}
+.tile.dark .sub{color:#a1a1a6}
+.tile.dark .btn.ghost{color:#2997ff;border-color:#2997ff}
+.tile.dark .btn.ghost:hover{background:#2997ff;color:#fff}
+.tile h2{font-size:clamp(32px,4.5vw,48px);font-weight:600}
+.tile .sub{font-size:clamp(17px,2vw,21px);color:var(--ink2);margin-top:4px}
+.tile .ctas{display:flex;gap:14px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.tile .art{flex:1;display:flex;align-items:flex-end;justify-content:center;width:100%;max-width:520px}
+.tile .art svg{width:100%;max-height:340px}
+@media(max-width:760px){.tiles{grid-template-columns:1fr}.tile{min-height:440px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:980px;background:var(--accent);color:#fff;font-size:15px;padding:9px 20px;font-weight:400;white-space:nowrap}
+.btn:hover{background:var(--accent-h);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--link);border:1px solid var(--link)}
+.btn.ghost:hover{background:var(--link);color:#fff}
+.btn.lg{font-size:17px;padding:12px 28px}
+.btn.gray{background:var(--bg2);color:var(--ink)}
+.btn.gray:hover{background:var(--line)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+.section{padding-block:56px}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.sechead h2{font-size:clamp(28px,3.6vw,40px);font-weight:600}
+.sechead h2 span{color:var(--ink3)}
+.perks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.perk{background:var(--tile);border-radius:var(--r);padding:26px 22px}
+.perk svg{width:30px;height:30px;color:var(--accent)}
+.perk h3{font-size:19px;margin-top:12px;font-weight:600}
+.perk p{color:var(--ink2);font-size:15px;margin:6px 0 0}
+@media(max-width:900px){.perks{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.perks{grid-template-columns:1fr}}
+
+/* product grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+.pc{background:var(--card);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;position:relative}
+.pc:hover{transform:scale(1.015);box-shadow:0 8px 34px rgba(0,0,0,.12)}
+.pc .pimg{background:var(--bg2);border-radius:12px;aspect-ratio:1/0.82;display:grid;place-items:center;cursor:pointer;max-width:100%}
+.pc .pimg svg{width:78%;height:88%}
+.pc .brand{font-size:12px;color:var(--warn);font-weight:600;margin-top:14px;text-transform:uppercase;letter-spacing:.04em}
+.pc h3{font-size:19px;font-weight:600;margin-top:2px;cursor:pointer}
+.pc .tag{color:var(--ink2);font-size:14px;margin-top:4px;flex:1}
+.pc .rate{font-size:13px;color:var(--ink3);margin-top:8px}
+.pc .price{margin-top:10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pc .price b{font-size:21px;font-weight:600}
+.pc .price small{color:var(--ink3);font-size:14px}
+.pc .inst{font-size:13px;color:var(--ink2)}
+.pc .acts{display:flex;gap:8px;margin-top:14px;align-items:center}
+.pc .acts .btn{flex:1}
+.tog{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--ink2);flex:none}
+.tog svg{width:18px;height:18px}
+.tog.on{color:var(--accent);border-color:var(--accent)}
+.tog.fav.on{color:#e0245e;border-color:#e0245e}
+
+/* category page */
+.cathead{padding-block:40px 20px}
+.cathead h1{font-size:clamp(36px,5vw,56px);font-weight:600}
+.cathead p{color:var(--ink2);font-size:19px;margin:8px 0 0;max-width:680px}
+.crumbs{font-size:13px;color:var(--ink3);margin-bottom:10px}
+.crumbs a{color:var(--ink3)}
+.catlay{display:grid;grid-template-columns:230px 1fr;gap:28px;padding-bottom:64px}
+@media(max-width:860px){.catlay{grid-template-columns:1fr}}
+.filters{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);align-self:start;display:flex;flex-direction:column;gap:22px}
+@media(max-width:860px){.filters{position:static;flex-direction:row;flex-wrap:wrap;gap:16px}}
+.fgroup h4{font-size:13px;font-weight:600;margin:0 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+.fgroup label{display:flex;align-items:center;gap:8px;font-size:15px;padding:3px 0;cursor:pointer}
+.fgroup input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.fgroup select,.fgroup input[type=number]{width:100%;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px;font-size:15px}
+.prange{display:flex;gap:8px}
+.prange input{min-width:0}
+.found{color:var(--ink2);font-size:15px;margin-bottom:14px}
+.empty{padding:60px 20px;text-align:center;color:var(--ink2);background:var(--tile);border-radius:var(--r)}
+
+/* product page */
+.pp{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;padding-block:24px 40px}
+@media(max-width:900px){.pp{grid-template-columns:1fr;gap:24px}}
+.ppimg{background:var(--bg2);border-radius:24px;aspect-ratio:1/1;display:grid;place-items:center;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);max-width:100%}
+@media(max-width:900px){.ppimg{position:static}}
+.ppimg svg{width:80%;height:80%}
+.swatches{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.pp h1{font-size:clamp(32px,4vw,48px);font-weight:600;line-height:1.08}
+.pp .lead{font-size:21px;color:var(--ink2);margin:10px 0 0}
+.pp .about{color:var(--ink2);font-size:16px;margin:14px 0 0}
+.pricebox{margin-top:24px;padding:22px;border-radius:var(--r);background:var(--tile);border:1px solid var(--line)}
+.pricebox .big{font-size:32px;font-weight:600}
+.pricebox .usd{color:var(--ink3);font-size:17px;margin-left:8px}
+.stock{font-size:14px;color:var(--ok);margin-top:4px}
+.ppacts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.ppacts .btn{flex:1;min-width:180px}
+.calc{margin-top:22px;padding:22px;border-radius:var(--r);border:1px solid var(--line)}
+.calc h3{font-size:19px;font-weight:600}
+.calc .terms{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.calc .terms button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 4px;font-size:15px}
+.calc .terms button.on{border:2px solid var(--accent);padding:9px 3px}
+.calc .terms button small{display:block;font-size:11px;color:var(--ink3)}
+.calc .res{display:flex;justify-content:space-between;margin-top:14px;font-size:15px;color:var(--ink2);flex-wrap:wrap;gap:6px}
+.calc .res b{color:var(--ink);font-size:24px;font-weight:600}
+.perkline{display:flex;flex-direction:column;gap:10px;margin-top:22px;font-size:15px}
+.perkline div{display:flex;gap:10px;align-items:flex-start}
+.perkline svg{width:20px;height:20px;flex:none;color:var(--ink2);margin-top:2px}
+.specs{padding-block:40px;border-top:1px solid var(--line)}
+.specs h2,.reviews h2{font-size:clamp(26px,3vw,32px);font-weight:600;margin-bottom:18px}
+.spectable{width:100%;border-collapse:collapse;font-size:16px}
+.spectable th,.spectable td{text-align:left;padding:14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spectable th{font-weight:400;color:var(--ink2);width:40%;padding-right:16px}
+.reviews{padding-block:40px 64px;border-top:1px solid var(--line)}
+.revlay{display:grid;grid-template-columns:1fr 380px;gap:36px}
+@media(max-width:900px){.revlay{grid-template-columns:1fr}}
+.rev{padding:18px 0;border-bottom:1px solid var(--line)}
+.rev .who{font-weight:600;font-size:15px}
+.rev .when{color:var(--ink3);font-size:13px;margin-left:6px;font-weight:400}
+.rev p{margin:6px 0 0;font-size:16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.stars{color:#f5a623;letter-spacing:1px}
+.revform{background:var(--tile);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px;align-self:start}
+.revform h3{font-size:19px;font-weight:600}
+.field{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink2)}
+.field input,.field textarea,.field select{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:11px 12px;font-size:16px;color:var(--ink);width:100%}
+.field textarea{min-height:96px;resize:vertical}
+.starpick{display:flex;gap:4px}
+.starpick button{background:none;border:0;font-size:26px;color:var(--line);padding:0 2px;line-height:1}
+.starpick button.on{color:#f5a623}
+.note{font-size:13px;color:var(--ink3)}
+.formmsg{font-size:14px;color:var(--ok)}
+.formerr{font-size:14px;color:var(--warn)}
+
+/* compare */
+.cmpwrap{overflow-x:auto;padding-bottom:10px}
+.cmp{border-collapse:collapse;min-width:640px;width:100%;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp thead td{text-align:center}
+.cmp thead svg{width:120px;height:110px}
+.cmp th{color:var(--ink2);font-weight:400;width:170px}
+.cmp .x{background:none;border:0;color:var(--link);font-size:13px}
+
+/* drawer + modal */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:80;backdrop-filter:blur(4px)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.2);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.dhead{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.dhead h2{font-size:24px;font-weight:600}
+.dbody{flex:1;overflow-y:auto;padding:8px 20px}
+.dfoot{padding:18px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.ci-row{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ci-row .th{background:var(--bg2);border-radius:12px;width:72px;height:72px;display:grid;place-items:center}
+.ci-row .th svg{width:60px;height:60px}
+.ci-row h4{margin:0;font-size:16px;font-weight:600}
+.ci-row .p{font-size:15px;margin-top:2px}
+.qty{display:flex;align-items:center;gap:6px;margin-top:8px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--card);line-height:1}
+.qty .rm{margin-left:auto;border:0;width:auto;background:none;color:var(--link);font-size:14px}
+.total{display:flex;justify-content:space-between;font-size:17px}
+.total b{font-size:22px}
+.modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;overflow-y:auto}
+.mbox{background:var(--bg);border-radius:22px;width:min(560px,100%);max-height:calc(100% - 20px);overflow-y:auto;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mbox h2{font-size:28px;font-weight:600}
+.mbox form{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+.seg{display:flex;background:var(--bg2);border-radius:12px;padding:3px;gap:3px}
+.seg label{flex:1;text-align:center;padding:9px 6px;border-radius:10px;font-size:14px;cursor:pointer;color:var(--ink)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.12);font-weight:600}
+.done{text-align:center;padding:10px 0}
+.done svg{width:64px;height:64px;color:var(--ok)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:14px;font-size:15px;z-index:100;box-shadow:0 8px 30px rgba(0,0,0,.25);max-width:calc(100% - 32px);text-align:center}
+
+footer{background:var(--bg2);color:var(--ink2);font-size:12px;margin-top:24px}
+footer .wrap{padding-block:30px}
+.fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+@media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+footer h5{color:var(--ink);font-size:12px;font-weight:600;margin:0 0 8px}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--ink2)}
+.fbottom{display:flex;justify-content:space-between;gap:12px;padding-top:16px;flex-wrap:wrap}
+.copy{border:0;background:none;color:var(--link);font-size:12px;padding:0 0 0 6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fade{animation:fade .35s ease both}
+@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+
+<svg class="svgdefs" aria-hidden="true">
+  <defs>
+    <mask id="pearBite" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="26">
+      <rect width="24" height="26" fill="#fff"/>
+      <circle cx="21.2" cy="14.2" r="3.4" fill="#000"/>
+    </mask>
+    <symbol id="pear" viewBox="0 0 24 26">
+      <path mask="url(#pearBite)" d="M12 5.2c-2.3 0-3.3 1.8-3.4 4-.1 2-1 3.1-2.3 4.6C4.9 15.4 4.4 16.9 4.4 18.4c0 4 3.4 6.8 7.6 6.8s7.6-2.8 7.6-6.8c0-1.5-.5-3-1.9-4.6-1.3-1.5-2.2-2.6-2.3-4.6-.1-2.2-1.1-4-3.4-4z"/>
+      <path d="M12.6 4.6c.2-2.5 2.3-4 4.9-3.9-.1 2.6-2.2 4.1-4.9 3.9z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="gnav">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Pear Store"><svg fill="currentColor"><use href="#pear"/></svg><span>Pear Store</span></a>
+    <nav class="navcats" id="navcats"></nav>
+    <div class="navtools">
+      <button class="ib" id="bSearch" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <a class="ib" href="#fav" id="bFav" aria-label="Favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="nFav" hidden></span></a>
+      <a class="ib" href="#compare" id="bCmp" aria-label="Compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v16M17 4v16M3 8h8M13 16h8"/></svg><span class="badge" id="nCmp" hidden></span></a>
+      <button class="ib" id="bCart" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="nCart" hidden></span></button>
+      <div class="lang" role="group" aria-label="Language">
+        <button data-l="kk">KZ</button><button data-l="ru">RU</button><button data-l="en">EN</button>
+      </div>
+      <button class="ib burger" id="bMenu" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16M4 16h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="mobmenu" id="mobmenu" hidden><div class="wrap" id="mobcats"></div></div>
+<div class="searchbar" id="searchbar" hidden><div class="wrap">
+  <input id="q" type="search" autocomplete="off">
+  <button class="btn gray" id="qClose">✕</button>
+</div></div>
+
+<main id="app"></main>
+
+<footer><div class="wrap">
+  <div class="fcols" id="fcols"></div>
+  <div class="fbottom"><span id="fcopy"></span><span id="fnote"></span></div>
+</div></footer>
+
+<div id="overlay"></div>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+/* Pear Store — каталог и переводы. Цены ориентировочные, в тенге; USD по курсу RATE. */
+window.RATE = 445;
+
+window.I18N = {
+ru:{
+  home:"Главная", search:"Поиск", searchPh:"Искать в Pear Store", fav:"Избранное", compare:"Сравнение", cart:"Корзина",
+  ribbon:"Рассрочка 0-0-12 на всю технику. Бесплатная доставка по Казахстану от 50 000 ₸.",
+  heroEyebrow:"Новый сезон", heroTitle:"Техника, с которой дома лучше.",
+  heroSub:"Смартфоны, ноутбуки и бытовая техника от ведущих брендов. С доставкой и рассрочкой.",
+  buy:"Купить", more:"Подробнее", toCart:"В корзину", inCart:"В корзине", from:"от",
+  perMonth:"/мес.", installFrom:"Рассрочка от", months:"мес.",
+  shopByCat:"Все категории", hits:"Хиты продаж.", hitsSub:"Выбор покупателей этой недели.",
+  why:"Почему Pear Store.", whySub:"Покупать технику должно быть просто.",
+  p1t:"Рассрочка 0-0-12", p1d:"Без переплаты и первого взноса на 3, 6 и 12 месяцев.",
+  p2t:"Доставка за 1 день", p2d:"По Алматы и Астане. В другие города — от 2 дней.",
+  p3t:"Официальная гарантия", p3d:"Вся техника сертифицирована, гарантия от производителя.",
+  p4t:"Trade-in", p4d:"Сдайте старое устройство и получите скидку на новое.",
+  filters:"Фильтры", brand:"Бренд", price:"Цена, ₸", min:"от", max:"до", sort:"Сортировка",
+  sPop:"По популярности", sAsc:"Сначала дешевле", sDesc:"Сначала дороже", sRate:"По рейтингу", sName:"По названию",
+  found:"Найдено товаров", reset:"Сбросить", nothing:"Ничего не найдено. Попробуйте изменить фильтры.",
+  inStock:"В наличии", specs:"Характеристики", about:"О товаре",
+  instTitle:"Калькулятор рассрочки", instNote:"0% на 3, 6 и 12 месяцев. На 24 месяца — переплата 12%.",
+  overpay:"Переплата", total:"Итого", monthly:"Ежемесячный платёж",
+  deliv:"Доставка завтра, бесплатно", pickup:"Самовывоз сегодня из магазина", warranty:"Гарантия 12 месяцев",
+  addFav:"В избранное", inFav:"В избранном", addCmp:"Сравнить", inCmp:"В сравнении",
+  reviews:"Отзывы", noReviews:"Отзывов пока нет. Станьте первым.", writeReview:"Написать отзыв",
+  yourName:"Ваше имя", rating:"Оценка", yourText:"Ваш отзыв", send:"Опубликовать",
+  revShared:"Отзыв опубликован.", revLocal:"Отзыв сохранён на этом устройстве.",
+  revNeed:"Укажите имя, оценку и текст отзыва.", revNote:"Отзывы видят все посетители страницы.",
+  revNoteLocal:"Отзывы сохраняются в этом браузере.",
+  reviewsN:"отзывов",
+  cartEmpty:"Ваша корзина пуста.", checkout:"Оформить заказ", remove:"Удалить", sum:"Сумма",
+  favEmpty:"В избранном пока ничего нет. Нажмите ♥ на карточке товара.",
+  cmpEmpty:"Добавьте товары к сравнению, чтобы увидеть их характеристики рядом.",
+  cmpMax:"Сравнивать можно до 4 товаров.", clear:"Очистить", price2:"Цена", category:"Категория",
+  added:"Добавлено в корзину", favAdded:"Добавлено в избранное", cmpAdded:"Добавлено к сравнению",
+  ckTitle:"Оформление заказа", name:"Имя и фамилия", phone:"Телефон", city:"Город", address:"Адрес",
+  delivery:"Способ получения", dCourier:"Курьер", dPickup:"Самовывоз", payment:"Оплата",
+  payCard:"Картой", payInst:"Рассрочка", payCash:"При получении", comment:"Комментарий",
+  placeOrder:"Подтвердить заказ", ckNeed:"Заполните имя, телефон и город.",
+  ckDone:"Заказ принят", ckDoneSub:"Номер заказа {n}. Менеджер свяжется с вами в течение 15 минут.",
+  demoNote:"Это демонстрационная форма, реальная оплата не проводится.",
+  close:"Закрыть", results:"Результаты поиска", resultsFor:"по запросу",
+  fShop:"Магазин", fHelp:"Покупателям", fAbout:"Pear Store", fContacts:"Контакты",
+  fh1:"Доставка и оплата", fh2:"Рассрочка 0-0-12", fh3:"Гарантия и сервис", fh4:"Trade-in",
+  fa1:"О компании", fa2:"Магазины", fa3:"Вакансии",
+  fc1:"Алматы, пр. Аль-Фараби, 77", fc2:"Ежедневно 10:00–22:00", copy:"копировать", copied:"Скопировано",
+  fcopy:"© 2026 Pear Store. Все права защищены.", fnote:"Цены ориентировочные. 1 $ = {r} ₸.",
+  priceUsd:"≈", perks:"Преимущества", onlyHere:"Только в Pear Store"
+},
+kk:{
+  home:"Басты бет", search:"Іздеу", searchPh:"Pear Store ішінен іздеу", fav:"Таңдаулылар", compare:"Салыстыру", cart:"Себет",
+  ribbon:"Барлық техникаға 0-0-12 бөліп төлеу. Қазақстан бойынша 50 000 ₸-ден тегін жеткізу.",
+  heroEyebrow:"Жаңа маусым", heroTitle:"Үйді жақсартатын техника.",
+  heroSub:"Жетекші брендтердің смартфондары, ноутбуктері және тұрмыстық техникасы. Жеткізу және бөліп төлеу.",
+  buy:"Сатып алу", more:"Толығырақ", toCart:"Себетке", inCart:"Себетте", from:"бастап",
+  perMonth:"/ай", installFrom:"Бөліп төлеу", months:"ай",
+  shopByCat:"Барлық санаттар", hits:"Хит сатылымдар.", hitsSub:"Осы аптаның сатып алушылар таңдауы.",
+  why:"Неге Pear Store.", whySub:"Техника сатып алу оңай болуы керек.",
+  p1t:"0-0-12 бөліп төлеу", p1d:"3, 6 және 12 айға артық төлемсіз және алғашқы жарнасыз.",
+  p2t:"1 күнде жеткізу", p2d:"Алматы мен Астана бойынша. Басқа қалаларға — 2 күннен.",
+  p3t:"Ресми кепілдік", p3d:"Барлық техника сертификатталған, өндіруші кепілдігі.",
+  p4t:"Trade-in", p4d:"Ескі құрылғыңызды тапсырып, жаңасына жеңілдік алыңыз.",
+  filters:"Сүзгілер", brand:"Бренд", price:"Бағасы, ₸", min:"бастап", max:"дейін", sort:"Сұрыптау",
+  sPop:"Танымалдылығы бойынша", sAsc:"Алдымен арзаны", sDesc:"Алдымен қымбаты", sRate:"Рейтинг бойынша", sName:"Атауы бойынша",
+  found:"Табылған тауарлар", reset:"Тазалау", nothing:"Ештеңе табылмады. Сүзгілерді өзгертіп көріңіз.",
+  inStock:"Қоймада бар", specs:"Сипаттамалары", about:"Тауар туралы",
+  instTitle:"Бөліп төлеу калькуляторы", instNote:"3, 6 және 12 айға 0%. 24 айға — 12% артық төлем.",
+  overpay:"Артық төлем", total:"Барлығы", monthly:"Ай сайынғы төлем",
+  deliv:"Ертең тегін жеткізу", pickup:"Бүгін дүкеннен алып кету", warranty:"12 ай кепілдік",
+  addFav:"Таңдаулыларға", inFav:"Таңдаулыларда", addCmp:"Салыстыру", inCmp:"Салыстыруда",
+  reviews:"Пікірлер", noReviews:"Әзірге пікір жоқ. Бірінші болыңыз.", writeReview:"Пікір жазу",
+  yourName:"Атыңыз", rating:"Бағалау", yourText:"Пікіріңіз", send:"Жариялау",
+  revShared:"Пікір жарияланды.", revLocal:"Пікір осы құрылғыда сақталды.",
+  revNeed:"Атыңызды, бағаны және пікір мәтінін көрсетіңіз.", revNote:"Пікірлерді беттің барлық келушілері көреді.",
+  revNoteLocal:"Пікірлер осы браузерде сақталады.",
+  reviewsN:"пікір",
+  cartEmpty:"Себетіңіз бос.", checkout:"Тапсырыс беру", remove:"Жою", sum:"Сомасы",
+  favEmpty:"Таңдаулыларда әзірге ештеңе жоқ. Тауар карточкасындағы ♥ басыңыз.",
+  cmpEmpty:"Сипаттамаларын қатар көру үшін тауарларды салыстыруға қосыңыз.",
+  cmpMax:"4 тауарға дейін салыстыруға болады.", clear:"Тазалау", price2:"Бағасы", category:"Санат",
+  added:"Себетке қосылды", favAdded:"Таңдаулыларға қосылды", cmpAdded:"Салыстыруға қосылды",
+  ckTitle:"Тапсырысты рәсімдеу", name:"Аты-жөні", phone:"Телефон", city:"Қала", address:"Мекенжай",
+  delivery:"Алу тәсілі", dCourier:"Курьер", dPickup:"Алып кету", payment:"Төлем",
+  payCard:"Картамен", payInst:"Бөліп төлеу", payCash:"Алған кезде", comment:"Түсініктеме",
+  placeOrder:"Тапсырысты растау", ckNeed:"Атыңызды, телефонды және қаланы толтырыңыз.",
+  ckDone:"Тапсырыс қабылданды", ckDoneSub:"Тапсырыс нөмірі {n}. Менеджер 15 минут ішінде хабарласады.",
+  demoNote:"Бұл демо-форма, нақты төлем жүргізілмейді.",
+  close:"Жабу", results:"Іздеу нәтижелері", resultsFor:"сұрау бойынша",
+  fShop:"Дүкен", fHelp:"Сатып алушыларға", fAbout:"Pear Store", fContacts:"Байланыс",
+  fh1:"Жеткізу және төлем", fh2:"0-0-12 бөліп төлеу", fh3:"Кепілдік және сервис", fh4:"Trade-in",
+  fa1:"Компания туралы", fa2:"Дүкендер", fa3:"Бос орындар",
+  fc1:"Алматы, Әл-Фараби даңғ., 77", fc2:"Күн сайын 10:00–22:00", copy:"көшіру", copied:"Көшірілді",
+  fcopy:"© 2026 Pear Store. Барлық құқықтар қорғалған.", fnote:"Бағалар шамамен берілген. 1 $ = {r} ₸.",
+  priceUsd:"≈", perks:"Артықшылықтар", onlyHere:"Тек Pear Store-да"
+},
+en:{
+  home:"Home", search:"Search", searchPh:"Search Pear Store", fav:"Favorites", compare:"Compare", cart:"Bag",
+  ribbon:"0-0-12 installments on all products. Free delivery across Kazakhstan on orders over 50,000 ₸.",
+  heroEyebrow:"New season", heroTitle:"Tech that makes home better.",
+  heroSub:"Smartphones, laptops and home appliances from leading brands. With delivery and installments.",
+  buy:"Buy", more:"Learn more", toCart:"Add to Bag", inCart:"In Bag", from:"from",
+  perMonth:"/mo.", installFrom:"Installments from", months:"mo.",
+  shopByCat:"All categories", hits:"Bestsellers.", hitsSub:"What shoppers picked this week.",
+  why:"Why Pear Store.", whySub:"Buying tech should be simple.",
+  p1t:"0-0-12 installments", p1d:"No interest and no down payment for 3, 6 or 12 months.",
+  p2t:"Next-day delivery", p2d:"In Almaty and Astana. Other cities from 2 days.",
+  p3t:"Official warranty", p3d:"Every product is certified and covered by the maker's warranty.",
+  p4t:"Trade In", p4d:"Trade in your old device for credit toward a new one.",
+  filters:"Filters", brand:"Brand", price:"Price, ₸", min:"min", max:"max", sort:"Sort by",
+  sPop:"Most popular", sAsc:"Price: low to high", sDesc:"Price: high to low", sRate:"Top rated", sName:"Name",
+  found:"Products found", reset:"Reset", nothing:"Nothing found. Try changing the filters.",
+  inStock:"In stock", specs:"Tech Specs", about:"Overview",
+  instTitle:"Installment calculator", instNote:"0% for 3, 6 and 12 months. 24 months adds 12%.",
+  overpay:"Extra cost", total:"Total", monthly:"Monthly payment",
+  deliv:"Free delivery tomorrow", pickup:"Pick up in store today", warranty:"12-month warranty",
+  addFav:"Save", inFav:"Saved", addCmp:"Compare", inCmp:"Comparing",
+  reviews:"Reviews", noReviews:"No reviews yet. Be the first.", writeReview:"Write a review",
+  yourName:"Your name", rating:"Rating", yourText:"Your review", send:"Publish",
+  revShared:"Review published.", revLocal:"Review saved on this device.",
+  revNeed:"Add your name, a rating and some text.", revNote:"Everyone who opens this page sees reviews.",
+  revNoteLocal:"Reviews are saved in this browser.",
+  reviewsN:"reviews",
+  cartEmpty:"Your bag is empty.", checkout:"Check Out", remove:"Remove", sum:"Subtotal",
+  favEmpty:"Nothing saved yet. Tap ♥ on any product.",
+  cmpEmpty:"Add products to compare their specs side by side.",
+  cmpMax:"You can compare up to 4 products.", clear:"Clear", price2:"Price", category:"Category",
+  added:"Added to Bag", favAdded:"Saved to Favorites", cmpAdded:"Added to Compare",
+  ckTitle:"Checkout", name:"Full name", phone:"Phone", city:"City", address:"Address",
+  delivery:"Delivery", dCourier:"Courier", dPickup:"Pickup", payment:"Payment",
+  payCard:"Card", payInst:"Installments", payCash:"On delivery", comment:"Comment",
+  placeOrder:"Place Order", ckNeed:"Please fill in your name, phone and city.",
+  ckDone:"Order placed", ckDoneSub:"Order number {n}. A manager will contact you within 15 minutes.",
+  demoNote:"This is a demo form. No real payment is taken.",
+  close:"Close", results:"Search results", resultsFor:"for",
+  fShop:"Shop", fHelp:"Help", fAbout:"Pear Store", fContacts:"Contact",
+  fh1:"Delivery & payment", fh2:"0-0-12 installments", fh3:"Warranty & service", fh4:"Trade In",
+  fa1:"About us", fa2:"Stores", fa3:"Careers",
+  fc1:"Almaty, 77 Al-Farabi Ave.", fc2:"Daily 10:00–22:00", copy:"copy", copied:"Copied",
+  fcopy:"© 2026 Pear Store. All rights reserved.", fnote:"Prices are approximate. $1 = {r} ₸.",
+  priceUsd:"≈", perks:"Perks", onlyHere:"Only at Pear Store"
+}};
+
+window.SPEC = {
+  screen:{ru:"Экран",kk:"Экран",en:"Display"},
+  chip:{ru:"Процессор",kk:"Процессор",en:"Chip"},
+  mem:{ru:"Память",kk:"Жад",en:"Memory"},
+  cam:{ru:"Камера",kk:"Камера",en:"Camera"},
+  bat:{ru:"Аккумулятор",kk:"Аккумулятор",en:"Battery"},
+  weight:{ru:"Вес",kk:"Салмағы",en:"Weight"},
+  os:{ru:"ОС",kk:"ОЖ",en:"OS"},
+  gpu:{ru:"Графика",kk:"Графика",en:"Graphics"},
+  res:{ru:"Разрешение",kk:"Ажыратымдылық",en:"Resolution"},
+  hz:{ru:"Частота",kk:"Жиілік",en:"Refresh rate"},
+  hdr:{ru:"HDR",kk:"HDR",en:"HDR"},
+  sound:{ru:"Звук",kk:"Дыбыс",en:"Audio"},
+  anc:{ru:"Шумоподавление",kk:"Шуды басу",en:"Noise cancelling"},
+  time:{ru:"Время работы",kk:"Жұмыс уақыты",en:"Battery life"},
+  vol:{ru:"Объём",kk:"Көлемі",en:"Capacity"},
+  freezer:{ru:"Морозильная камера",kk:"Мұздатқыш",en:"Freezer"},
+  noise:{ru:"Уровень шума",kk:"Шу деңгейі",en:"Noise level"},
+  energy:{ru:"Класс энергопотребления",kk:"Энергия класы",en:"Energy class"},
+  load:{ru:"Загрузка",kk:"Жүктеме",en:"Load"},
+  spin:{ru:"Отжим",kk:"Сығу",en:"Spin speed"},
+  prog:{ru:"Программы",kk:"Бағдарламалар",en:"Programs"},
+  burn:{ru:"Конфорки",kk:"Конфоркалар",en:"Cooktop"},
+  power:{ru:"Мощность",kk:"Қуаты",en:"Power"},
+  press:{ru:"Давление",kk:"Қысым",en:"Pressure"},
+  area:{ru:"Площадь помещения",kk:"Бөлме ауданы",en:"Room size"},
+  filter:{ru:"Фильтр",kk:"Сүзгі",en:"Filter"},
+  modes:{ru:"Режимы",kk:"Режимдер",en:"Modes"},
+  suction:{ru:"Мощность всасывания",kk:"Сору қуаты",en:"Suction"},
+  store:{ru:"Накопитель",kk:"Жинақтағыш",en:"Storage"},
+  fps:{ru:"Графика",kk:"Графика",en:"Graphics"},
+  conn:{ru:"Подключение",kk:"Қосылу",en:"Connectivity"},
+  size:{ru:"Размеры",kk:"Өлшемдері",en:"Dimensions"},
+  type:{ru:"Тип",kk:"Түрі",en:"Type"},
+  temp:{ru:"Температура",kk:"Температура",en:"Temperature"}
+};
+
+window.CATS = [
+ {id:"phones", art:"phone", c:"#3a4a5e", n:{ru:"Смартфоны",kk:"Смартфондар",en:"Smartphones"},
+  d:{ru:"Флагманы и доступные модели с лучшими камерами и экранами.",kk:"Үздік камералары мен экрандары бар флагмандар мен қолжетімді модельдер.",en:"Flagships and value picks with great cameras and displays."}},
+ {id:"laptops", art:"laptop", c:"#c9ccd1", n:{ru:"Ноутбуки",kk:"Ноутбуктер",en:"Laptops"},
+  d:{ru:"Для учёбы, работы и игр. Лёгкие, мощные, автономные.",kk:"Оқу, жұмыс және ойын үшін. Жеңіл, қуатты, ұзақ жұмыс істейді.",en:"For study, work and play. Light, powerful, all-day battery."}},
+ {id:"tv", art:"tv", c:"#2b2b2e", n:{ru:"ТВ и аудио",kk:"ТВ және аудио",en:"TV & Audio"},
+  d:{ru:"Телевизоры, наушники и колонки для кино и музыки дома.",kk:"Үйде кино мен музыка үшін теледидарлар, құлаққаптар мен колонкалар.",en:"TVs, headphones and speakers for movies and music at home."}},
+ {id:"large", art:"fridge", c:"#d7d9dc", n:{ru:"Крупная техника",kk:"Ірі техника",en:"Large Appliances"},
+  d:{ru:"Холодильники, стиральные и посудомоечные машины, плиты.",kk:"Тоңазытқыштар, кір жуғыш және ыдыс жуғыш машиналар, плиталар.",en:"Refrigerators, washers, dishwashers and cookers."}},
+ {id:"kitchen", art:"coffee", c:"#2f2f31", n:{ru:"Техника для кухни",kk:"Ас үй техникасы",en:"Kitchen"},
+  d:{ru:"Кофемашины, аэрогрили, чайники и всё для быстрого завтрака.",kk:"Кофе машиналары, аэрогрильдер, шәйнектер және жылдам таңғы ас үшін бәрі.",en:"Coffee machines, air fryers, kettles and everything for breakfast."}},
+ {id:"climate", art:"ac", c:"#f2f3f4", n:{ru:"Климат",kk:"Климат",en:"Climate"},
+  d:{ru:"Кондиционеры, очистители и увлажнители воздуха, обогреватели.",kk:"Кондиционерлер, ауа тазартқыштар мен ылғалдандырғыштар, жылытқыштар.",en:"Air conditioners, purifiers, humidifiers and heaters."}},
+ {id:"beauty", art:"dryer", c:"#b0476b", n:{ru:"Красота и уход",kk:"Сұлулық және күтім",en:"Beauty & Care"},
+  d:{ru:"Фены, бритвы, стайлеры и электрические зубные щётки.",kk:"Фендер, ұстаралар, стайлерлер және электр тіс щеткалары.",en:"Hair dryers, shavers, stylers and electric toothbrushes."}},
+ {id:"vacuum", art:"stickvac", c:"#8a5cc2", n:{ru:"Пылесосы",kk:"Шаңсорғыштар",en:"Vacuums"},
+  d:{ru:"Беспроводные, роботы и классические пылесосы для любой уборки.",kk:"Кез келген тазалауға арналған сымсыз, робот және классикалық шаңсорғыштар.",en:"Cordless, robot and canister vacuums for every kind of clean."}},
+ {id:"games", art:"gamepad", c:"#e9eaec", n:{ru:"Игры",kk:"Ойындар",en:"Gaming"},
+  d:{ru:"Игровые консоли, геймпады и VR-шлемы.",kk:"Ойын консольдері, геймпадтар және VR-шлемдер.",en:"Game consoles, controllers and VR headsets."}}
+];
+
+/* [id, cat, brand, name, priceKZT, art, color, {ru,kk,en}, specs, popularity] */
+const P = (id,cat,brand,name,price,art,color,t,sp,pop)=>({id,cat,brand,name,price,art,color,t,sp,pop});
+window.PRODUCTS = [
+// Смартфоны
+P("ip17pro","phones","Apple","iPhone 17 Pro 256 GB",699990,"phone","#d9793b",
+ {ru:"Корпус из алюминия, чип A19 Pro и тройная камера 48 Мп.",kk:"Алюминий корпус, A19 Pro чипі және үш 48 Мп камера.",en:"Aluminum design, A19 Pro chip and a triple 48MP camera."},
+ {screen:"6.3″ OLED, 120 Hz",chip:"Apple A19 Pro",mem:"256 GB",cam:"48 + 48 + 48 MP",bat:"до 31 ч видео",weight:"204 g"},98),
+P("ip17","phones","Apple","iPhone 17 256 GB",499990,"phone","#a9b8c9",
+ {ru:"Экран ProMotion 120 Гц и камера Center Stage.",kk:"120 Гц ProMotion экраны және Center Stage камерасы.",en:"ProMotion 120Hz display and Center Stage front camera."},
+ {screen:"6.3″ OLED, 120 Hz",chip:"Apple A19",mem:"256 GB",cam:"48 + 48 MP",bat:"до 30 ч видео",weight:"177 g"},95),
+P("s26u","phones","Samsung","Galaxy S26 Ultra 512 GB",749990,"phone","#4b5563",
+ {ru:"Камера 200 Мп, стилус S Pen и Galaxy AI.",kk:"200 Мп камера, S Pen стилусы және Galaxy AI.",en:"200MP camera, built-in S Pen and Galaxy AI."},
+ {screen:"6.9″ AMOLED, 120 Hz",chip:"Snapdragon 8 Elite for Galaxy",mem:"12 / 512 GB",cam:"200 + 50 + 50 + 10 MP",bat:"5000 mAh",weight:"218 g"},92),
+P("pix10p","phones","Google","Pixel 10 Pro 256 GB",529990,"phone","#8f9a8c",
+ {ru:"Чистый Android, чип Tensor G5 и лучшие ночные фото.",kk:"Таза Android, Tensor G5 чипі және түнгі үздік фотолар.",en:"Clean Android, Tensor G5 and superb night photos."},
+ {screen:"6.3″ OLED, 120 Hz",chip:"Google Tensor G5",mem:"16 / 256 GB",cam:"50 + 48 + 48 MP",bat:"4870 mAh",weight:"207 g"},80),
+P("mi15","phones","Xiaomi","Xiaomi 15 512 GB",399990,"phone","#2f5d50",
+ {ru:"Компактный флагман с оптикой Leica.",kk:"Leica оптикасы бар ықшам флагман.",en:"A compact flagship with Leica optics."},
+ {screen:"6.36″ AMOLED, 120 Hz",chip:"Snapdragon 8 Elite",mem:"12 / 512 GB",cam:"50 + 50 + 50 MP",bat:"5400 mAh",weight:"191 g"},84),
+P("a56","phones","Samsung","Galaxy A56 5G 256 GB",189990,"phone","#b8a6d9",
+ {ru:"Яркий экран, 6 лет обновлений и защита IP67.",kk:"Жарқын экран, 6 жыл жаңарту және IP67 қорғанысы.",en:"Bright display, 6 years of updates and IP67 protection."},
+ {screen:"6.7″ AMOLED, 120 Hz",chip:"Exynos 1580",mem:"8 / 256 GB",cam:"50 + 12 + 5 MP",bat:"5000 mAh",weight:"198 g"},90),
+// Ноутбуки
+P("mba13","laptops","Apple","MacBook Air 13″ M4",549990,"laptop","#c7d3e0",
+ {ru:"Тонкий, тихий и до 18 часов без подзарядки.",kk:"Жұқа, тыныш және қуаттандырусыз 18 сағатқа дейін.",en:"Thin, silent and up to 18 hours of battery."},
+ {screen:"13.6″ Liquid Retina",chip:"Apple M4, 10 CPU",mem:"16 GB",store:"256 GB SSD",bat:"до 18 ч",weight:"1.24 kg"},96),
+P("mbp14","laptops","Apple","MacBook Pro 14″ M5",899990,"laptop","#3a3a3c",
+ {ru:"Профессиональная мощность и дисплей XDR.",kk:"Кәсіби қуат және XDR дисплейі.",en:"Pro performance with a stunning XDR display."},
+ {screen:"14.2″ Liquid Retina XDR",chip:"Apple M5",mem:"16 GB",store:"512 GB SSD",bat:"до 24 ч",weight:"1.55 kg"},88),
+P("zen14","laptops","ASUS","Zenbook 14 OLED",449990,"laptop","#2c3e66",
+ {ru:"OLED-экран 3K и Intel Core Ultra с ИИ-ускорителем.",kk:"3K OLED экраны және ЖИ үдеткіші бар Intel Core Ultra.",en:"3K OLED display and Intel Core Ultra with an AI engine."},
+ {screen:"14″ OLED 3K, 120 Hz",chip:"Intel Core Ultra 7 255H",mem:"16 GB",store:"1 TB SSD",bat:"75 Wh",weight:"1.28 kg"},82),
+P("ideapad5","laptops","Lenovo","IdeaPad Slim 5 15″",329990,"laptop","#8e959c",
+ {ru:"Большой экран и надёжность для учёбы и офиса.",kk:"Оқу мен кеңсе үшін үлкен экран және сенімділік.",en:"A big screen and reliability for study and office."},
+ {screen:"15.3″ IPS 2K",chip:"AMD Ryzen 7 8845HS",mem:"16 GB",store:"512 GB SSD",bat:"57 Wh",weight:"1.66 kg"},86),
+P("pav15","laptops","HP","Pavilion 15",289990,"laptop","#b9b2a8",
+ {ru:"Универсальный ноутбук для дома.",kk:"Үйге арналған әмбебап ноутбук.",en:"An all-round laptop for home."},
+ {screen:"15.6″ IPS Full HD",chip:"Intel Core i5-1335U",mem:"16 GB",store:"512 GB SSD",bat:"41 Wh",weight:"1.75 kg"},78),
+P("nitro","laptops","Acer","Nitro V 15 RTX 4050",419990,"laptop","#1f2226",
+ {ru:"Игровой ноутбук с RTX 4050 и экраном 144 Гц.",kk:"RTX 4050 және 144 Гц экраны бар ойын ноутбугі.",en:"Gaming laptop with RTX 4050 and a 144Hz screen."},
+ {screen:"15.6″ IPS, 144 Hz",chip:"Intel Core i5-13420H",gpu:"NVIDIA RTX 4050 6 GB",mem:"16 GB",store:"512 GB SSD",weight:"2.1 kg"},81),
+// ТВ и аудио
+P("qn85","tv","Samsung","Neo QLED 55″ QN85",549990,"tv","#2a2a2d",
+ {ru:"Mini LED подсветка и 120 Гц для кино и спорта.",kk:"Кино мен спорт үшін Mini LED жарығы және 120 Гц.",en:"Mini LED backlight and 120Hz for movies and sport."},
+ {screen:"55″ Neo QLED",res:"4K UHD",hz:"120 Hz",hdr:"HDR10+",sound:"40 W, OTS Lite",os:"Tizen"},85),
+P("oledc4","tv","LG","OLED evo 55″ C4",649990,"tv","#3b3b3f",
+ {ru:"Идеальный чёрный цвет и 144 Гц для игр.",kk:"Мінсіз қара түс және ойындарға 144 Гц.",en:"Perfect blacks and 144Hz for gaming."},
+ {screen:"55″ OLED evo",res:"4K UHD",hz:"144 Hz",hdr:"Dolby Vision",sound:"40 W, Dolby Atmos",os:"webOS"},89),
+P("xtv55","tv","Xiaomi","TV A Pro 55″ 2025",229990,"tv","#303134",
+ {ru:"QLED-экран 4K по доступной цене.",kk:"Қолжетімді бағадағы 4K QLED экраны.",en:"A 4K QLED screen at an easy price."},
+ {screen:"55″ QLED",res:"4K UHD",hz:"60 Hz",hdr:"Dolby Vision",sound:"2 × 10 W",os:"Google TV"},87),
+P("xm6","tv","Sony","WH-1000XM6",179990,"headphones","#262628",
+ {ru:"Эталонное шумоподавление и 30 часов музыки.",kk:"Эталондық шуды басу және 30 сағат музыка.",en:"Class-leading noise cancelling and 30 hours of music."},
+ {type:"Накладные, Bluetooth 5.3",anc:"Да, адаптивное",time:"до 30 ч",weight:"254 g",conn:"Bluetooth, USB-C"},90),
+P("app3","tv","Apple","AirPods Pro 3",129990,"earbuds","#f2f2f4",
+ {ru:"Активное шумоподавление и датчик пульса.",kk:"Белсенді шуды басу және пульс датчигі.",en:"Active Noise Cancellation and heart-rate sensing."},
+ {type:"TWS",anc:"Да",time:"до 8 ч (до 24 ч с кейсом)",weight:"5.6 g",conn:"Bluetooth 5.3, USB-C"},94),
+P("charge6","tv","JBL","Charge 6",79990,"speaker","#1f5fae",
+ {ru:"Мощный звук, защита IP68 и 24 часа работы.",kk:"Қуатты дыбыс, IP68 қорғанысы және 24 сағат жұмыс.",en:"Big sound, IP68 protection and 24-hour battery."},
+ {sound:"45 W",time:"до 24 ч",weight:"1.3 kg",conn:"Bluetooth 5.4, USB-C Audio"},83),
+// Крупная техника
+P("rb38","large","Samsung","Холодильник RB38 No Frost",399990,"fridge","#c9ccd0",
+ {ru:"No Frost, инверторный компрессор и 390 литров.",kk:"No Frost, инверторлы компрессор және 390 литр.",en:"No Frost, inverter compressor and 390 liters."},
+ {vol:"390 L",freezer:"114 L",noise:"35 dB",energy:"A+",size:"595 × 2030 × 658 mm"},88),
+P("gab509","large","LG","Холодильник GA-B509 DoorCooling",369990,"fridge","#3d3f44",
+ {ru:"Технология DoorCooling+ охлаждает на 35% быстрее.",kk:"DoorCooling+ технологиясы 35% жылдамырақ салқындатады.",en:"DoorCooling+ chills up to 35% faster."},
+ {vol:"384 L",freezer:"107 L",noise:"36 dB",energy:"A++",size:"595 × 2030 × 682 mm"},84),
+P("lgf2v5","large","LG","Стиральная машина F2V5 AI DD",269990,"washer","#f1f1f3",
+ {ru:"Искусственный интеллект подбирает режим под ткань.",kk:"Жасанды интеллект матаға сай режимді таңдайды.",en:"AI picks the right cycle for every fabric."},
+ {load:"8 kg",spin:"1200 rpm",prog:"14",noise:"53 dB",energy:"A+++",size:"600 × 850 × 470 mm"},90),
+P("boschw6","large","Bosch","Стиральная машина Serie 6 i-DOS",329990,"washer","#e6e7e9",
+ {ru:"Автодозирование средства и тихий мотор.",kk:"Жуғыш заттың автодозасы және тыныш мотор.",en:"Automatic detergent dosing and a quiet motor."},
+ {load:"9 kg",spin:"1400 rpm",prog:"15",noise:"48 dB",energy:"A",size:"598 × 848 × 590 mm"},82),
+P("boschdw","large","Bosch","Посудомоечная машина Serie 4",299990,"dishwasher","#d8dadd",
+ {ru:"13 комплектов, сушка Extra Dry и Wi-Fi.",kk:"13 жиынтық, Extra Dry кептіру және Wi-Fi.",en:"13 place settings, Extra Dry and Wi-Fi."},
+ {vol:"13 комплектов",prog:"6",noise:"44 dB",energy:"C",size:"600 × 845 × 600 mm"},77),
+P("gorenje","large","Gorenje","Электроплита GEC6C41",199990,"stove","#e9e9eb",
+ {ru:"Стеклокерамика и духовой шкаф с конвекцией 70 л.",kk:"Шыны керамика және 70 л конвекциялы пеш.",en:"Ceramic hob and a 70 L convection oven."},
+ {burn:"4, стеклокерамика",vol:"70 L",power:"9.2 kW",energy:"A",size:"600 × 850 × 600 mm"},74),
+// Кухня
+P("magnifica","kitchen","De'Longhi","Кофемашина Magnifica S",189990,"coffee","#2d2d2f",
+ {ru:"Свежемолотый эспрессо и капучино одним нажатием.",kk:"Бір басумен жаңа үгітілген эспрессо мен капучино.",en:"Fresh bean-to-cup espresso and cappuccino."},
+ {press:"15 bar",power:"1450 W",vol:"1.8 L",type:"Автоматическая, капучинатор",weight:"9 kg"},90),
+P("airfryer","kitchen","Philips","Аэрогриль Airfryer XXL",99990,"airfryer","#1f1f21",
+ {ru:"Хрустящая еда на 90% меньше жира.",kk:"90% аз маймен қытырлақ тағам.",en:"Crispy food with up to 90% less fat."},
+ {vol:"7.3 L",power:"2000 W",prog:"5",temp:"40–200 °C"},92),
+P("kettle","kitchen","Tefal","Чайник Sense KO6931",19990,"kettle","#f4f4f5",
+ {ru:"Выбор температуры и поддержание тепла.",kk:"Температураны таңдау және жылуды сақтау.",en:"Adjustable temperature and keep-warm."},
+ {vol:"1.5 L",power:"1800 W",temp:"40–100 °C"},86),
+P("mw","kitchen","Samsung","Микроволновка MS23K3614",49990,"microwave","#2c2c2e",
+ {ru:"Керамическая эмаль, быстрая разморозка.",kk:"Керамикалық эмаль, жылдам еріту.",en:"Ceramic enamel interior and quick defrost."},
+ {vol:"23 L",power:"800 W",prog:"Автоменю 24"},80),
+P("blender","kitchen","Braun","Блендер PowerBlend 3",29990,"blender","#e3e4e6",
+ {ru:"Смузи и супы-пюре за минуту.",kk:"Бір минутта смузи мен пюре-сорпа.",en:"Smoothies and soups in a minute."},
+ {vol:"1.5 L",power:"800 W",modes:"2 скорости + импульс"},72),
+P("multicooker","kitchen","Redmond","Мультиварка RMC-M92",34990,"cooker","#9aa0a6",
+ {ru:"45 программ и функция «Мастершеф».",kk:"45 бағдарлама және «Мастершеф» функциясы.",en:"45 programs and a Master Chef mode."},
+ {vol:"5 L",power:"860 W",prog:"45"},76),
+// Климат
+P("midea","climate","Midea","Кондиционер Breezeless 12",219990,"ac","#f5f6f7",
+ {ru:"Инвертор, мягкий поток без сквозняков.",kk:"Инвертор, ескексіз жұмсақ ағын.",en:"Inverter with a gentle, draft-free airflow."},
+ {area:"до 35 m²",power:"3.5 kW",noise:"20 dB",energy:"A++",modes:"Wi-Fi, Холод/Тепло"},84),
+P("lgac","climate","LG","Кондиционер Dual Inverter 12",299990,"ac","#eef0f2",
+ {ru:"Экономия энергии до 70% и управление со смартфона.",kk:"70%-ға дейін энергия үнемдеу және смартфоннан басқару.",en:"Up to 70% energy savings and app control."},
+ {area:"до 35 m²",power:"3.5 kW",noise:"19 dB",energy:"A++",modes:"ThinQ Wi-Fi"},80),
+P("purifier","climate","Xiaomi","Очиститель воздуха 4",69990,"purifier","#f3f3f4",
+ {ru:"HEPA-фильтр H13 и датчик качества воздуха.",kk:"H13 HEPA сүзгісі және ауа сапасы датчигі.",en:"H13 HEPA filter and an air-quality sensor."},
+ {area:"до 48 m²",filter:"HEPA H13",noise:"32 dB",modes:"Mi Home"},83),
+P("dysonhp","climate","Dyson","Purifier Hot+Cool HP10",349990,"loopfan","#d9dadc",
+ {ru:"Очищает, обогревает и охлаждает круглый год.",kk:"Жыл бойы тазартады, жылытады және салқындатады.",en:"Purifies, heats and cools all year round."},
+ {area:"до 40 m²",filter:"HEPA H13",power:"2000 W",modes:"Очистка, обогрев, вентилятор"},78),
+P("ballu","climate","Ballu","Конвектор Evolution 2000",29990,"heater","#f7f7f8",
+ {ru:"Бесшумный обогрев с электронным термостатом.",kk:"Электрондық термостаты бар шусыз жылыту.",en:"Silent heating with an electronic thermostat."},
+ {area:"до 25 m²",power:"2000 W",modes:"Термостат, таймер"},75),
+P("boneco","climate","Boneco","Увлажнитель U350",49990,"humidifier","#f0f0f1",
+ {ru:"Тёплый и холодный пар, ароматизация.",kk:"Жылы және суық бу, хош иістендіру.",en:"Warm and cool mist with aroma."},
+ {vol:"3.7 L",area:"до 60 m²",noise:"25 dB",modes:"Тёплый / холодный пар"},72),
+// Красота
+P("supersonic","beauty","Dyson","Фен Supersonic Nural",229990,"dryer","#b8476d",
+ {ru:"Умный фен, который защищает кожу головы.",kk:"Бас терісін қорғайтын ақылды фен.",en:"A smart dryer that protects your scalp."},
+ {power:"1600 W",modes:"5 насадок",temp:"4 режима",weight:"0.56 kg"},93),
+P("s9000","beauty","Philips","Бритва Series 9000",149990,"shaver","#2b2e33",
+ {ru:"Бритьё без раздражения благодаря SkinIQ.",kk:"SkinIQ арқасында тітіркенусіз қырыну.",en:"Irritation-free shaving with SkinIQ."},
+ {type:"Роторная, Wet & Dry",time:"до 60 мин",modes:"3 режима"},84),
+P("braun7","beauty","Braun","Бритва Series 7",89990,"shaver","#5b6770",
+ {ru:"360° гибкая головка для чистого бритья.",kk:"Таза қырынуға арналған 360° икемді бас.",en:"360° flex head for a close shave."},
+ {type:"Роторная, Wet & Dry",time:"до 50 мин",modes:"Турбо / мягкий"},80),
+P("remington","beauty","Remington","Выпрямитель S9100",24990,"straightener","#4a3b52",
+ {ru:"Керамическое покрытие и нагрев за 15 секунд.",kk:"Керамикалық жабын және 15 секундта қызу.",en:"Ceramic plates and 15-second heat-up."},
+ {temp:"150–230 °C",modes:"5 режимов",type:"Керамика"},74),
+P("lumea","beauty","Philips","Фотоэпилятор Lumea 9900",179990,"ipl","#e8d9d2",
+ {ru:"Гладкая кожа до 6 месяцев после курса.",kk:"Курстан кейін 6 айға дейін тегіс тері.",en:"Smooth skin for up to 6 months."},
+ {type:"IPL",modes:"4 насадки",time:"450 000 вспышек"},76),
+P("oralb","beauty","Oral-B","Зубная щётка iO 9",99990,"toothbrush","#1e2124",
+ {ru:"Магнитный привод и ИИ-распознавание зон.",kk:"Магниттік жетек және ЖИ аймақтарды тану.",en:"Magnetic drive and AI brushing recognition."},
+ {modes:"7 режимов",time:"до 14 дней",conn:"Bluetooth, приложение"},78),
+// Пылесосы
+P("v15","vacuum","Dyson","V15 Detect Absolute",399990,"stickvac","#c7a33b",
+ {ru:"Лазер подсвечивает невидимую пыль.",kk:"Лазер көрінбейтін шаңды жарықтандырады.",en:"A laser reveals invisible dust."},
+ {suction:"240 AW",time:"до 60 мин",vol:"0.76 L",weight:"3.1 kg",filter:"HEPA"},92),
+P("x20","vacuum","Xiaomi","Робот-пылесос X20+",229990,"robot","#f4f4f5",
+ {ru:"Сам моет швабры и опустошает контейнер.",kk:"Швабраларды өзі жуып, контейнерді өзі босатады.",en:"Washes its mops and empties itself."},
+ {suction:"6000 Pa",time:"до 180 мин",type:"Сухая + влажная уборка",modes:"LDS-навигация"},90),
+P("roborock","vacuum","Roborock","S8 MaxV Ultra",499990,"robot","#1f2023",
+ {ru:"Робот с манипулятором и камерой ИИ.",kk:"Манипуляторы мен ЖИ камерасы бар робот.",en:"A robot with a side arm and AI camera."},
+ {suction:"10000 Pa",time:"до 180 мин",type:"Сухая + влажная уборка",modes:"Док-станция 9 в 1"},86),
+P("jet","vacuum","Samsung","Bespoke Jet AI",299990,"stickvac","#8a8f96",
+ {ru:"Станция автоочистки и 280 Вт мощности.",kk:"Автотазалау станциясы және 280 Вт қуат.",en:"Clean station and 280 W of suction."},
+ {suction:"280 W",time:"до 100 мин",vol:"0.5 L",weight:"2.8 kg"},82),
+P("powerpro","vacuum","Philips","PowerPro Active",59990,"canister","#2f63b8",
+ {ru:"Мощный классический пылесос без мешка.",kk:"Қапшықсыз қуатты классикалық шаңсорғыш.",en:"A powerful bagless canister vacuum."},
+ {power:"1900 W",vol:"1.5 L",filter:"HEPA 12",noise:"79 dB"},80),
+P("karcher","vacuum","Kärcher","Моющий пылесос SE 4",119990,"canister","#f0c419",
+ {ru:"Чистка ковров и мебели с водой.",kk:"Кілемдер мен жиһазды сумен тазалау.",en:"Deep-cleans carpets and upholstery with water."},
+ {power:"1000 W",vol:"4 L",type:"Моющий"},70),
+// Игры
+P("ps5pro","games","Sony","PlayStation 5 Pro",399990,"console","#f3f3f5",
+ {ru:"Графика 4K с трассировкой лучей и 2 ТБ SSD.",kk:"Сәулелік трассировкасы бар 4K графика және 2 ТБ SSD.",en:"4K ray-traced graphics and a 2TB SSD."},
+ {store:"2 TB SSD",fps:"4K, до 120 fps",conn:"Wi-Fi 7, HDMI 2.1"},94),
+P("ps5slim","games","Sony","PlayStation 5 Slim",279990,"console","#e9eaec",
+ {ru:"Самая популярная консоль в компактном корпусе.",kk:"Ықшам корпустағы ең танымал консоль.",en:"The most popular console, now slimmer."},
+ {store:"1 TB SSD",fps:"4K, до 120 fps",conn:"Wi-Fi 6, HDMI 2.1"},96),
+P("xsx","games","Microsoft","Xbox Series X",299990,"xbox","#161618",
+ {ru:"12 терафлопс и Game Pass в придачу.",kk:"12 терафлопс және қосымша Game Pass.",en:"12 teraflops, with Game Pass on top."},
+ {store:"1 TB SSD",fps:"4K, до 120 fps",conn:"Wi-Fi 5, HDMI 2.1"},80),
+P("switch2","games","Nintendo","Switch 2",239990,"handheld","#2b2c30",
+ {ru:"Играйте дома на ТВ или в дороге.",kk:"Үйде теледидарда немесе жолда ойнаңыз.",en:"Play on the TV at home or on the go."},
+ {screen:"7.9″ LCD, 120 Hz",store:"256 GB",fps:"до 4K на ТВ",bat:"до 6.5 ч"},91),
+P("dsedge","games","Sony","DualSense Edge",99990,"gamepad","#f2f2f4",
+ {ru:"Профессиональный геймпад со сменными стиками.",kk:"Ауыстырмалы стиктері бар кәсіби геймпад.",en:"Pro controller with swappable sticks."},
+ {conn:"Bluetooth, USB-C",type:"Сменные стики, задние кнопки",bat:"до 6 ч"},79),
+P("quest3s","games","Meta","Quest 3S 128 GB",179990,"vr","#f5f5f6",
+ {ru:"Смешанная реальность без проводов и ПК.",kk:"Сымсыз және ДК-сыз аралас шындық.",en:"Mixed reality with no wires or PC."},
+ {store:"128 GB",screen:"1832 × 1920 на глаз",bat:"до 2.5 ч",weight:"514 g"},77)
+];
+
+</script>
+<script>
+/* Pear Store — иллюстрации товаров (SVG, в духе продуктовой съёмки Apple). */
+(function(){
+let U=0;
+function sh(hex,a){ // a in -1..1
+  let h=hex.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');
+  let r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+  const f=a<0?0:255,t=Math.abs(a);
+  r=Math.round(r+(f-r)*t);g=Math.round(g+(f-g)*t);b=Math.round(b+(f-b)*t);
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function lg(id,c,dir){ // metallic linear gradient
+  const [x2,y2]=dir==='v'?[0,1]:[1,0];
+  return `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}"><stop offset="0" stop-color="${sh(c,.28)}"/><stop offset=".45" stop-color="${c}"/><stop offset="1" stop-color="${sh(c,-.28)}"/></linearGradient>`;
+}
+function wall(id,hue){
+  const pals={a:['#ff5f6d','#ffc371','#5f2c82'],b:['#00c6ff','#0072ff','#1c1c3c'],c:['#a18cd1','#fbc2eb','#2b1d4e'],d:['#43e97b','#38f9d7','#0b3d4a']};
+  const p=pals[hue]||pals.b;
+  return `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${p[0]}"/><stop offset=".55" stop-color="${p[1]}"/><stop offset="1" stop-color="${p[2]}"/></linearGradient>`;
+}
+const shadow=(cx,cy,rx,ry)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry||5}" fill="#000" opacity=".12"/>`;
+const gl=(id)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/></linearGradient>`;
+
+const D={
+phone(c,i){return `<defs>${lg('b'+i,c)}${wall('w'+i,'b')}${gl('g'+i)}</defs>${shadow(100,186,40,4)}
+ <g transform="rotate(-8 100 100)">
+ <rect x="70" y="18" width="66" height="136" rx="14" fill="url(#b${i})"/>
+ <rect x="73" y="21" width="60" height="130" rx="11" fill="#0b0b0c"/>
+ <rect x="75.5" y="23.5" width="55" height="125" rx="9" fill="url(#w${i})"/>
+ <rect x="93" y="27" width="20" height="5.5" rx="2.75" fill="#000"/>
+ <text x="103" y="58" text-anchor="middle" font-family="-apple-system,Helvetica,Arial" font-size="15" font-weight="300" fill="#fff" opacity=".95">9:41</text>
+ <rect x="75.5" y="23.5" width="55" height="125" rx="9" fill="url(#g${i})"/></g>
+ <g transform="rotate(10 128 110)" opacity=".98">
+ <rect x="104" y="44" width="62" height="130" rx="13" fill="url(#b${i})"/>
+ <rect x="110" y="50" width="30" height="34" rx="9" fill="${sh(c,-.15)}"/>
+ <circle cx="118" cy="59" r="5.5" fill="#1a1a1c" stroke="${sh(c,.3)}" stroke-width="1.2"/><circle cx="132" cy="59" r="5.5" fill="#1a1a1c" stroke="${sh(c,.3)}" stroke-width="1.2"/><circle cx="118" cy="75" r="5.5" fill="#1a1a1c" stroke="${sh(c,.3)}" stroke-width="1.2"/>
+ <circle cx="132" cy="75" r="2" fill="#f3e3b0"/></g>`},
+laptop(c,i){return `<defs>${lg('b'+i,c)}${wall('w'+i,'c')}${gl('g'+i)}</defs>${shadow(100,170,86,5)}
+ <rect x="32" y="40" width="136" height="92" rx="6" fill="${sh(c,-.2)}"/>
+ <rect x="35" y="43" width="130" height="86" rx="4" fill="#0b0b0c"/>
+ <rect x="38" y="46" width="124" height="80" rx="2" fill="url(#w${i})"/>
+ <rect x="38" y="46" width="124" height="80" fill="url(#g${i})"/>
+ <path d="M14 134h172l-6 12c-1 2-3 3-5 3H25c-2 0-4-1-5-3z" fill="url(#b${i})"/>
+ <rect x="84" y="134" width="32" height="3" rx="1.5" fill="${sh(c,-.3)}"/>`},
+tv(c,i){return `<defs>${wall('w'+i,'a')}${gl('g'+i)}</defs>${shadow(100,176,70,4)}
+ <rect x="12" y="34" width="176" height="104" rx="4" fill="${sh(c,-.3)}"/>
+ <rect x="15" y="37" width="170" height="98" rx="2" fill="url(#w${i})"/>
+ <rect x="15" y="37" width="170" height="98" fill="url(#g${i})"/>
+ <path d="M60 140l-14 32h8l14-32zM140 140l14 32h-8l-14-32z" fill="${sh(c,.1)}"/>`},
+headphones(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,180,60,5)}
+ <path d="M48 118V88a52 52 0 0 1 104 0v30" fill="none" stroke="${sh(c,.12)}" stroke-width="10" stroke-linecap="round"/>
+ <path d="M52 92a48 48 0 0 1 96 0" fill="none" stroke="${sh(c,.35)}" stroke-width="2"/>
+ <rect x="28" y="104" width="40" height="66" rx="18" fill="url(#b${i})"/>
+ <rect x="132" y="104" width="40" height="66" rx="18" fill="url(#b${i})"/>
+ <rect x="56" y="112" width="10" height="50" rx="5" fill="${sh(c,-.4)}"/><rect x="134" y="112" width="10" height="50" rx="5" fill="${sh(c,-.4)}"/>`},
+earbuds(c,i){return `<defs><linearGradient id="b${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcdce0"/></linearGradient></defs>${shadow(100,170,56,5)}
+ <rect x="50" y="78" width="100" height="88" rx="30" fill="url(#b${i})" stroke="#d0d0d5"/>
+ <line x1="52" y1="104" x2="148" y2="104" stroke="#cfcfd4"/>
+ <circle cx="100" cy="134" r="3" fill="#8fd18f"/>
+ <g transform="rotate(-18 70 58)"><ellipse cx="70" cy="50" rx="14" ry="12" fill="url(#b${i})" stroke="#d0d0d5"/><rect x="66" y="56" width="9" height="30" rx="4.5" fill="url(#b${i})" stroke="#d0d0d5"/></g>
+ <g transform="rotate(18 130 58)"><ellipse cx="130" cy="50" rx="14" ry="12" fill="url(#b${i})" stroke="#d0d0d5"/><rect x="125" y="56" width="9" height="30" rx="4.5" fill="url(#b${i})" stroke="#d0d0d5"/></g>`},
+speaker(c,i){return `<defs>${lg('b'+i,c,'v')}<pattern id="p${i}" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#000" opacity=".25"/></pattern></defs>${shadow(100,160,78,6)}
+ <rect x="22" y="82" width="156" height="72" rx="36" fill="url(#b${i})"/>
+ <rect x="22" y="82" width="156" height="72" rx="36" fill="url(#p${i})"/>
+ <ellipse cx="30" cy="118" rx="10" ry="30" fill="${sh(c,-.45)}"/><ellipse cx="170" cy="118" rx="10" ry="30" fill="${sh(c,-.45)}"/>
+ <rect x="82" y="112" width="36" height="12" rx="6" fill="${sh(c,.5)}" opacity=".85"/>`},
+fridge(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,190,52,4)}
+ <rect x="56" y="10" width="88" height="176" rx="8" fill="url(#b${i})"/>
+ <line x1="56" y1="72" x2="144" y2="72" stroke="${sh(c,-.35)}" stroke-width="1.5"/>
+ <rect x="128" y="30" width="5" height="30" rx="2.5" fill="${sh(c,-.4)}"/><rect x="128" y="82" width="5" height="44" rx="2.5" fill="${sh(c,-.4)}"/>
+ <rect x="68" y="80" width="18" height="8" rx="2" fill="#0d0d0e" opacity=".7"/><text x="77" y="86.5" text-anchor="middle" font-size="6" fill="#6fd0ff" font-family="Arial">4°</text>`},
+washer(c,i){return `<defs>${lg('b'+i,c)}<radialGradient id="d${i}"><stop offset="0" stop-color="#6b7580"/><stop offset=".7" stop-color="#2a2f35"/><stop offset="1" stop-color="#15181b"/></radialGradient></defs>${shadow(100,178,58,4)}
+ <rect x="44" y="30" width="112" height="146" rx="10" fill="url(#b${i})"/>
+ <line x1="44" y1="58" x2="156" y2="58" stroke="${sh(c,-.2)}"/>
+ <rect x="52" y="38" width="36" height="12" rx="3" fill="#111" opacity=".85"/><circle cx="136" cy="44" r="7" fill="${sh(c,-.12)}" stroke="${sh(c,-.3)}"/>
+ <circle cx="100" cy="116" r="42" fill="${sh(c,-.18)}"/><circle cx="100" cy="116" r="35" fill="url(#d${i})"/>
+ <path d="M78 100a30 30 0 0 1 24-16" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>`},
+dishwasher(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,180,58,4)}
+ <rect x="44" y="30" width="112" height="146" rx="8" fill="url(#b${i})"/>
+ <rect x="44" y="30" width="112" height="22" rx="8" fill="${sh(c,-.3)}"/>
+ <rect x="56" y="37" width="28" height="8" rx="2" fill="#111"/><circle cx="140" cy="41" r="3" fill="#5ac8fa"/>
+ <rect x="62" y="62" width="76" height="6" rx="3" fill="${sh(c,-.35)}"/>`},
+stove(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,184,62,4)}
+ <path d="M40 46h120l8 16H32z" fill="#151517"/>
+ <ellipse cx="72" cy="52" rx="14" ry="3.5" fill="none" stroke="#444" stroke-width="1.5"/><ellipse cx="128" cy="52" rx="14" ry="3.5" fill="none" stroke="#444" stroke-width="1.5"/><ellipse cx="72" cy="58" rx="10" ry="2.5" fill="none" stroke="#c0392b" stroke-width="1.2" opacity=".8"/>
+ <rect x="32" y="62" width="136" height="118" rx="4" fill="url(#b${i})"/>
+ <rect x="32" y="62" width="136" height="16" fill="${sh(c,-.15)}"/>
+ ${[48,64,136,152].map(x=>`<circle cx="${x}" cy="70" r="4.5" fill="${sh(c,-.4)}"/>`).join('')}
+ <rect x="46" y="88" width="108" height="66" rx="6" fill="#161618"/><rect x="52" y="94" width="96" height="54" rx="4" fill="#26262a"/>
+ <rect x="60" y="82" width="80" height="4" rx="2" fill="${sh(c,-.4)}"/>`},
+coffee(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,182,50,5)}
+ <rect x="56" y="22" width="88" height="158" rx="12" fill="url(#b${i})"/>
+ <rect x="64" y="30" width="72" height="22" rx="5" fill="#0d0d0e"/><circle cx="76" cy="41" r="3" fill="#f5b041"/><circle cx="88" cy="41" r="3" fill="#aaa"/>
+ <rect x="80" y="62" width="40" height="14" rx="4" fill="${sh(c,-.4)}"/><rect x="92" y="76" width="4" height="10" fill="#555"/><rect x="104" y="76" width="4" height="10" fill="#555"/>
+ <rect x="66" y="152" width="68" height="20" rx="4" fill="${sh(c,-.35)}"/>
+ <path d="M86 122h28l-3 28H89z" fill="#fff"/><path d="M114 128h5a5 5 0 0 1 0 10h-6" stroke="#fff" stroke-width="3" fill="none"/>
+ <ellipse cx="100" cy="122" rx="14" ry="3" fill="#6b3e1f"/>`},
+airfryer(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,178,54,5)}
+ <path d="M52 50c0-14 12-22 48-22s48 8 48 22v116c0 6-4 10-10 10H62c-6 0-10-4-10-10z" fill="url(#b${i})"/>
+ <circle cx="100" cy="58" r="12" fill="#0e0e10" stroke="${sh(c,.3)}"/><text x="100" y="61" font-size="8" text-anchor="middle" fill="#fff" font-family="Arial">180°</text>
+ <path d="M58 96h84v64c0 5-3 8-8 8H66c-5 0-8-3-8-8z" fill="${sh(c,-.2)}"/>
+ <rect x="80" y="118" width="40" height="12" rx="6" fill="${sh(c,.25)}"/>`},
+kettle(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,178,50,5)}
+ <ellipse cx="96" cy="168" rx="46" ry="8" fill="#222"/>
+ <path d="M60 60h72l8 104H52z" fill="url(#b${i})"/>
+ <path d="M62 60c4-8 64-8 68 0" fill="${sh(c,-.1)}"/>
+ <path d="M140 72c22 0 22 70 0 76" stroke="${sh(c,-.25)}" stroke-width="10" fill="none" stroke-linecap="round"/>
+ <path d="M60 70L40 58" stroke="${sh(c,-.15)}" stroke-width="8" stroke-linecap="round"/>
+ <rect x="94" y="88" width="6" height="56" rx="3" fill="#8fd0ff" opacity=".7"/>`},
+microwave(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,160,80,5)}
+ <rect x="18" y="58" width="164" height="98" rx="8" fill="url(#b${i})"/>
+ <rect x="28" y="68" width="112" height="78" rx="4" fill="#0f0f10"/><rect x="34" y="74" width="100" height="66" rx="3" fill="#232427"/>
+ <rect x="148" y="72" width="26" height="12" rx="2" fill="#0a0a0a"/><text x="161" y="81" font-size="7" fill="#5ac8fa" text-anchor="middle" font-family="Arial">0:30</text>
+ <circle cx="161" cy="104" r="8" fill="${sh(c,.2)}"/><circle cx="161" cy="128" r="5" fill="${sh(c,.2)}"/>`},
+blender(c,i){return `<defs>${lg('b'+i,c)}<linearGradient id="j${i}" x1="0" x2="1"><stop offset="0" stop-color="#dff4ff" stop-opacity=".7"/><stop offset="1" stop-color="#b8d8ea" stop-opacity=".4"/></linearGradient></defs>${shadow(100,184,40,4)}
+ <path d="M70 26h60l-8 104H78z" fill="url(#j${i})" stroke="#9ab" stroke-width="1"/>
+ <path d="M80 80h40l-3 50H83z" fill="#f28b82" opacity=".85"/>
+ <rect x="66" y="20" width="68" height="10" rx="4" fill="#333"/>
+ <path d="M128 40h10v50h-12" stroke="#9ab" stroke-width="4" fill="none"/>
+ <path d="M68 132h64l6 48H62z" fill="url(#b${i})"/><circle cx="100" cy="156" r="8" fill="${sh(c,-.4)}"/>`},
+cooker(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,176,58,5)}
+ <path d="M44 88h112v70c0 10-8 16-18 16H62c-10 0-18-6-18-16z" fill="url(#b${i})"/>
+ <path d="M40 90c0-26 26-42 60-42s60 16 60 42z" fill="${sh(c,.2)}"/>
+ <rect x="84" y="40" width="32" height="12" rx="6" fill="${sh(c,-.3)}"/>
+ <rect x="70" y="112" width="60" height="30" rx="6" fill="#0f0f10"/><text x="100" y="131" font-size="10" text-anchor="middle" fill="#ff9f43" font-family="Arial">00:45</text>`},
+ac(c,i){return `<defs>${lg('b'+i,c,'v')}</defs>${shadow(100,142,86,4)}
+ <path d="M16 72c0-8 6-14 14-14h140c8 0 14 6 14 14v36c0 8-6 14-14 14H30c-8 0-14-6-14-14z" fill="url(#b${i})" stroke="#d8d9dc"/>
+ <path d="M30 116h140" stroke="#bfc1c5" stroke-width="3" stroke-linecap="round"/>
+ <circle cx="164" cy="74" r="2" fill="#34c759"/>
+ <path d="M50 134c10 8 20 8 30 0M90 138c10 8 20 8 30 0M130 134c10 8 20 8 30 0" stroke="#7fc8f8" stroke-width="2" fill="none" opacity=".7" stroke-linecap="round"/>`},
+purifier(c,i){return `<defs>${lg('b'+i,c)}<pattern id="p${i}" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" fill="#9aa0a6"/></pattern></defs>${shadow(100,186,40,4)}
+ <rect x="64" y="20" width="72" height="164" rx="36" fill="url(#b${i})" stroke="#dcdde0"/>
+ <rect x="70" y="100" width="60" height="76" rx="28" fill="url(#p${i})" opacity=".6"/>
+ <circle cx="100" cy="50" r="18" fill="#101012"/><circle cx="100" cy="50" r="14" fill="none" stroke="#34c759" stroke-width="2.5"/><text x="100" y="54" font-size="10" text-anchor="middle" fill="#fff" font-family="Arial">12</text>`},
+loopfan(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,186,36,4)}
+ <path d="M74 24h52l6 110H68z" fill="none" stroke="url(#b${i})" stroke-width="12" stroke-linejoin="round"/>
+ <rect x="68" y="130" width="64" height="56" rx="14" fill="url(#b${i})"/>
+ <g opacity=".5">${[140,150,160,170].map(y=>`<line x1="76" y1="${y}" x2="124" y2="${y}" stroke="${sh(c,-.4)}" stroke-dasharray="2 2"/>`).join('')}</g>`},
+heater(c,i){return `<defs>${lg('b'+i,c,'v')}</defs>${shadow(100,176,82,4)}
+ <rect x="16" y="64" width="168" height="96" rx="10" fill="url(#b${i})" stroke="#d6d7da"/>
+ ${Array.from({length:14},(_,k)=>`<rect x="${30+k*10.6}" y="72" width="4" height="22" rx="2" fill="#c9cbce"/>`).join('')}
+ <rect x="140" y="110" width="30" height="14" rx="3" fill="#111"/><text x="155" y="120" font-size="8" fill="#ff9f43" text-anchor="middle" font-family="Arial">22°</text>
+ <rect x="30" y="160" width="10" height="16" rx="3" fill="#aaa"/><rect x="160" y="160" width="10" height="16" rx="3" fill="#aaa"/>`},
+humidifier(c,i){return `<defs>${lg('b'+i,c)}<linearGradient id="t${i}" x1="0" x2="1"><stop offset="0" stop-color="#bfe6ff" stop-opacity=".8"/><stop offset="1" stop-color="#7cc4ef" stop-opacity=".5"/></linearGradient></defs>${shadow(100,182,46,5)}
+ <path d="M86 40c-6-10 10-18 4-28M104 40c-6-10 10-18 4-28" stroke="#9fd3f5" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+ <rect x="58" y="44" width="84" height="90" rx="20" fill="url(#t${i})" stroke="#cde"/>
+ <rect x="54" y="128" width="92" height="52" rx="16" fill="url(#b${i})" stroke="#ddd"/>
+ <circle cx="100" cy="154" r="9" fill="#1b1b1d"/>`},
+dryer(c,i){return `<defs>${lg('b'+i,c,'v')}</defs>${shadow(100,186,40,4)}
+ <rect x="84" y="80" width="32" height="104" rx="16" fill="url(#b${i})"/>
+ <rect x="30" y="34" width="140" height="56" rx="28" fill="url(#b${i})"/>
+ <ellipse cx="46" cy="62" rx="14" ry="26" fill="${sh(c,-.4)}"/><ellipse cx="46" cy="62" rx="8" ry="18" fill="#1a1a1c"/>
+ <rect x="150" y="38" width="16" height="48" rx="8" fill="#c9c9cc"/>
+ <rect x="94" y="110" width="12" height="20" rx="6" fill="${sh(c,.3)}"/>`},
+shaver(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,188,34,4)}
+ <path d="M70 70h60l-8 110c0 4-4 8-8 8H86c-4 0-8-4-8-8z" fill="url(#b${i})"/>
+ <path d="M58 30h84c6 0 8 6 6 12l-8 28H60l-8-28c-2-6 0-12 6-12z" fill="#b7b9bd"/>
+ <circle cx="80" cy="46" r="12" fill="#8e9196" stroke="#6d7075"/><circle cx="120" cy="46" r="12" fill="#8e9196" stroke="#6d7075"/><circle cx="100" cy="58" r="10" fill="#8e9196" stroke="#6d7075"/>
+ <circle cx="100" cy="110" r="10" fill="${sh(c,.25)}"/>`},
+straightener(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,186,40,4)}
+ <g transform="rotate(12 100 100)"><rect x="82" y="18" width="20" height="166" rx="10" fill="url(#b${i})"/><rect x="86" y="24" width="12" height="70" rx="4" fill="#d9d2c4"/></g>
+ <g transform="rotate(-6 100 100)"><rect x="100" y="18" width="20" height="166" rx="10" fill="url(#b${i})"/><rect x="104" y="24" width="12" height="70" rx="4" fill="#d9d2c4"/></g>`},
+ipl(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,186,36,4)}
+ <path d="M76 70h48l-6 110c0 4-3 6-6 6H88c-3 0-6-2-6-6z" fill="url(#b${i})"/>
+ <rect x="62" y="26" width="76" height="52" rx="18" fill="url(#b${i})"/>
+ <rect x="72" y="32" width="56" height="24" rx="8" fill="#fbe7a1" opacity=".9"/>
+ <circle cx="100" cy="110" r="7" fill="${sh(c,-.35)}"/>`},
+toothbrush(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,188,26,4)}
+ <rect x="94" y="16" width="12" height="54" rx="6" fill="#e9e9ec"/><rect x="92" y="18" width="16" height="16" rx="5" fill="#fff" stroke="#ccd"/>
+ <rect x="86" y="68" width="28" height="118" rx="14" fill="url(#b${i})"/>
+ <circle cx="100" cy="100" r="6" fill="${sh(c,.35)}"/><rect x="92" y="120" width="16" height="3" rx="1.5" fill="#5ac8fa"/>`},
+stickvac(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,186,58,4)}
+ <g transform="rotate(-22 100 100)">
+ <rect x="96" y="70" width="8" height="118" rx="4" fill="${sh(c,.1)}"/>
+ <rect x="82" y="14" width="34" height="62" rx="12" fill="url(#b${i})"/>
+ <rect x="88" y="24" width="22" height="40" rx="8" fill="#bcd4e6" opacity=".55"/>
+ <path d="M116 30h10a6 6 0 0 1 6 6v26" stroke="${sh(c,-.4)}" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+ <rect x="96" y="172" width="62" height="16" rx="8" fill="${sh(c,-.35)}"/><rect x="100" y="182" width="54" height="4" rx="2" fill="#6ee07b"/>`},
+robot(c,i){return `<defs><radialGradient id="b${i}" cx=".4" cy=".35"><stop offset="0" stop-color="${sh(c,.25)}"/><stop offset="1" stop-color="${sh(c,-.2)}"/></radialGradient></defs>${shadow(100,168,76,8)}
+ <ellipse cx="100" cy="150" rx="78" ry="18" fill="${sh(c,-.35)}"/>
+ <ellipse cx="100" cy="138" rx="78" ry="30" fill="url(#b${i})"/>
+ <ellipse cx="100" cy="126" rx="18" ry="7" fill="${sh(c,-.25)}"/><ellipse cx="100" cy="122" rx="16" ry="6" fill="${sh(c,.1)}"/>
+ <circle cx="70" cy="140" r="3" fill="#34c759"/>
+ <path d="M30 144a70 22 0 0 0 140 0" fill="none" stroke="${sh(c,-.4)}" stroke-width="1"/>`},
+canister(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,178,72,6)}
+ <path d="M112 90C150 40 172 40 180 30" stroke="#444" stroke-width="6" fill="none" stroke-linecap="round"/>
+ <ellipse cx="80" cy="130" rx="60" ry="44" fill="url(#b${i})"/>
+ <ellipse cx="70" cy="118" rx="30" ry="20" fill="#bcd4e6" opacity=".5"/>
+ <circle cx="44" cy="164" r="12" fill="#222"/><circle cx="116" cy="164" r="12" fill="#222"/>`},
+console(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,188,50,5)}
+ <path d="M62 16c20 6 24 60 20 170H62c-12-60-12-120 0-170z" fill="url(#b${i})"/>
+ <rect x="82" y="22" width="36" height="164" rx="6" fill="#141416"/>
+ <path d="M138 16c-20 6-24 60-20 170h20c12-60 12-120 0-170z" fill="url(#b${i})"/>
+ <circle cx="100" cy="150" r="2" fill="#5ac8fa"/>`},
+xbox(c,i){return `<defs>${lg('b'+i,c)}</defs>${shadow(100,188,40,5)}
+ <rect x="62" y="30" width="76" height="156" rx="6" fill="url(#b${i})"/>
+ <ellipse cx="100" cy="34" rx="30" ry="6" fill="#0a0a0a"/>
+ ${Array.from({length:9},(_,k)=>`<circle cx="${82+(k%3)*18}" cy="33" r="1.2" fill="#6ee07b"/>`).slice(0,3).join('')}
+ <circle cx="76" cy="54" r="3" fill="#f5f5f7" opacity=".7"/>`},
+handheld(c,i){return `<defs>${wall('w'+i,'d')}${gl('g'+i)}</defs>${shadow(100,150,92,5)}
+ <rect x="10" y="62" width="36" height="84" rx="14" fill="#2f86ff"/><rect x="154" y="62" width="36" height="84" rx="14" fill="#ff4c5e"/>
+ <rect x="42" y="62" width="116" height="84" rx="4" fill="${c}"/>
+ <rect x="48" y="68" width="104" height="72" rx="2" fill="url(#w${i})"/><rect x="48" y="68" width="104" height="72" fill="url(#g${i})"/>
+ <circle cx="28" cy="84" r="7" fill="#1d1d1f"/><circle cx="172" cy="120" r="7" fill="#1d1d1f"/>
+ ${[[172,80],[164,88],[180,88],[172,96]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#1d1d1f"/>`).join('')}`},
+gamepad(c,i){return `<defs>${lg('b'+i,c,'v')}</defs>${shadow(100,166,72,6)}
+ <path d="M50 64h100c20 0 30 16 34 40l8 40c3 16-12 22-22 12l-22-26H52l-22 26c-10 10-25 4-22-12l8-40c4-24 14-40 34-40z" fill="url(#b${i})" stroke="#d7d8db"/>
+ <rect x="74" y="66" width="52" height="26" rx="6" fill="#1b1b1d"/>
+ <circle cx="76" cy="112" r="11" fill="#2b2b2e"/><circle cx="124" cy="112" r="11" fill="#2b2b2e"/>
+ <path d="M44 88h8v-8h6v8h8v6h-8v8h-6v-8h-8z" fill="#3a3a3c"/>
+ ${[[152,80,'#3a3a3c'],[142,90,'#3a3a3c'],[162,90,'#3a3a3c'],[152,100,'#3a3a3c']].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${p[2]}"/>`).join('')}`},
+vr(c,i){return `<defs>${lg('b'+i,c,'v')}</defs>${shadow(100,160,76,6)}
+ <path d="M28 90c0-20 10-30 30-30h84c20 0 30 10 30 30v26c0 18-10 26-26 26h-26l-12-14h-16l-12 14H54c-16 0-26-8-26-26z" fill="url(#b${i})" stroke="#d5d6d9"/>
+ <circle cx="60" cy="100" r="6" fill="#1b1b1d"/><circle cx="140" cy="100" r="6" fill="#1b1b1d"/><circle cx="100" cy="92" r="4" fill="#1b1b1d"/>
+ <path d="M28 96H14M172 96h14" stroke="#9a9ca0" stroke-width="8" stroke-linecap="round"/>`}
+};
+
+window.art=function(type,color,cls){
+  const i=++U; const f=D[type]||D.phone;
+  return `<svg viewBox="0 0 200 200" ${cls?`class="${cls}"`:''} role="img" aria-hidden="true">${f(color||'#999',i)}</svg>`;
+};
+})();
+
+</script>
+<script>
+/* Pear Store — логика приложения */
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem('pear_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('pear_'+k,JSON.stringify(v))}catch(e){}}};
+
+const S={
+  lang:LS.get('lang','ru'),
+  cart:LS.get('cart',{}),
+  fav:LS.get('fav',[]),
+  cmp:LS.get('cmp',[]),
+  localRev:LS.get('rev',[]),
+  sharedRev:[], db:null, dbReady:false,
+  filters:{}, q:'', term:{}, stars:0, route:'home'
+};
+const save=()=>{LS.set('cart',S.cart);LS.set('fav',S.fav);LS.set('cmp',S.cmp);LS.set('lang',S.lang)};
+const T=k=>(I18N[S.lang]&&I18N[S.lang][k])??I18N.ru[k]??k;
+const L=o=>o?(o[S.lang]||o.ru):'';
+const PR=Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
+const CAT=Object.fromEntries(CATS.map(c=>[c.id,c]));
+const nb=' ';
+const kzt=n=>Math.round(n).toLocaleString('ru-RU').replace(/\s/g,nb)+nb+'₸';
+const usd=n=>'$'+Math.round(n/RATE).toLocaleString('en-US');
+
+/* перевод значений характеристик */
+function tv(v){
+  v=String(v);
+  if(S.lang==='ru')return v;
+  const en=[[/^до (.+)$/,'up to $1'],[/ ч( |$)/g,' h$1'],[/ мин/g,' min'],[/ видео/,' video'],[/ на глаз/,' per eye'],[/ на ТВ/,' on TV'],[/ комплектов/,' place settings'],[/ насадок/,' attachments'],[/ насадки/,' attachments'],[/ режимов/,' modes'],[/ режима/,' modes'],[/ вспышек/,' flashes'],[/ скорости \+ импульс/,' speeds + pulse'],[/ в 1/,'-in-1']];
+  const kk=[[/^до (.+)$/,'$1 дейін'],[/ ч( |$)/g,' сағ$1'],[/ видео/,' бейне'],[/ на глаз/,' әр көзге'],[/ на ТВ/,' ТВ-да'],[/ комплектов/,' жиынтық'],[/ насадок/,' саптама'],[/ насадки/,' саптама'],[/ режимов/,' режим'],[/ режима/,' режим'],[/ вспышек/,' жарқыл'],[/ скорости \+ импульс/,' жылдамдық + импульс'],[/ в 1/,' 1-де']];
+  const words={en:{"Да":"Yes","Да, адаптивное":"Yes, adaptive","Накладные, Bluetooth 5.3":"Over-ear, Bluetooth 5.3","Автоматическая, капучинатор":"Automatic, milk frother","Автоменю 24":"24 auto menus","Холод/Тепло":"Cool/Heat","Очистка, обогрев, вентилятор":"Purify, heat, fan","Термостат, таймер":"Thermostat, timer","Тёплый / холодный пар":"Warm / cool mist","Роторная, Wet & Dry":"Rotary, Wet & Dry","Турбо / мягкий":"Turbo / gentle","Керамика":"Ceramic","Сухая + влажная уборка":"Vacuum + mop","LDS-навигация":"LDS navigation","Моющий":"Wet cleaning","Сменные стики, задние кнопки":"Swappable sticks, back buttons","Bluetooth, приложение":"Bluetooth, app","4, стеклокерамика":"4, ceramic glass","Midea":"Midea"},
+    kk:{"Да":"Иә","Да, адаптивное":"Иә, адаптивті","Накладные, Bluetooth 5.3":"Жапсырмалы, Bluetooth 5.3","Автоматическая, капучинатор":"Автоматты, капучинатор","Автоменю 24":"24 автомәзір","Холод/Тепло":"Суық/Жылу","Очистка, обогрев, вентилятор":"Тазарту, жылыту, желдеткіш","Термостат, таймер":"Термостат, таймер","Тёплый / холодный пар":"Жылы / суық бу","Роторная, Wet & Dry":"Роторлы, Wet & Dry","Турбо / мягкий":"Турбо / жұмсақ","Керамика":"Керамика","Сухая + влажная уборка":"Құрғақ + ылғалды тазалау","LDS-навигация":"LDS навигация","Моющий":"Жуғыш","Сменные стики, задние кнопки":"Ауыстырмалы стиктер, артқы батырмалар","Bluetooth, приложение":"Bluetooth, қолданба","4, стеклокерамика":"4, шыны керамика"}};
+  if(words[S.lang][v])return words[S.lang][v];
+  (S.lang==='en'?en:kk).forEach(([a,b])=>{v=v.replace(a,b)});
+  if(S.lang==='en')v=v.replace(/Wi-Fi, Холод\/Тепло/,'Wi-Fi, Cool/Heat');
+  if(S.lang==='kk')v=v.replace(/Wi-Fi, Холод\/Тепло/,'Wi-Fi, Суық/Жылу');
+  return v;
+}
+
+/* отзывы */
+const allRev=pid=>[...S.sharedRev,...S.localRev].filter(r=>r.pid===pid).sort((a,b)=>b.ts-a.ts);
+function rating(pid){const r=allRev(pid);if(!r.length)return null;return{avg:r.reduce((s,x)=>s+(+x.rating||0),0)/r.length,n:r.length}}
+const starStr=a=>'★★★★★'.slice(0,Math.round(a))+'☆☆☆☆☆'.slice(0,5-Math.round(a));
+
+/* иконки */
+const IC={
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+  heartF:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+  cmp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v16M17 4v16M3 8h8M13 16h8"/></svg>',
+  truck:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+  store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
+  card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>',
+  swap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h14l-3-3M20 16H6l3 3"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>'
+};
+
+/* карточка товара */
+function card(p){
+  const inC=S.cart[p.id],inF=S.fav.includes(p.id),inM=S.cmp.includes(p.id),r=rating(p.id);
+  return `<article class="pc">
+    <div class="pimg" data-go="p-${p.id}">${art(p.art,p.color)}</div>
+    <div class="brand">${esc(p.brand)}</div>
+    <h3 data-go="p-${p.id}">${esc(p.name)}</h3>
+    <div class="tag">${esc(L(p.t))}</div>
+    <div class="rate">${r?`<span class="stars">${starStr(r.avg)}</span> ${r.avg.toFixed(1)} · ${r.n} ${T('reviewsN')}`:`<span class="stars" style="color:var(--line)">★★★★★</span>`}</div>
+    <div class="price num"><b>${kzt(p.price)}</b><small>${usd(p.price)}</small></div>
+    <div class="inst num">${T('installFrom')} ${kzt(p.price/12)}${T('perMonth')}</div>
+    <div class="acts">
+      <button class="btn ${inC?'gray':''}" data-act="add" data-id="${p.id}">${inC?T('inCart'):T('toCart')}</button>
+      <button class="tog fav ${inF?'on':''}" data-act="fav" data-id="${p.id}" aria-label="${T('addFav')}" aria-pressed="${inF}">${inF?IC.heartF:IC.heart}</button>
+      <button class="tog ${inM?'on':''}" data-act="cmp" data-id="${p.id}" aria-label="${T('addCmp')}" aria-pressed="${inM}">${IC.cmp}</button>
+    </div></article>`;
+}
+
+/* навигация и футер */
+function chrome(){
+  document.documentElement.lang=S.lang==='kk'?'kk':S.lang;
+  const cur=S.route.startsWith('c-')?S.route.slice(2):S.route.startsWith('p-')?(PR[S.route.slice(2)]||{}).cat:'';
+  const links=CATS.map(c=>`<a href="#c-${c.id}" class="${cur===c.id?'on':''}">${esc(L(c.n))}</a>`).join('');
+  $('#navcats').innerHTML=links; $('#mobcats').innerHTML=links;
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===S.lang));
+  $('#q').placeholder=T('searchPh');
+  const cartN=Object.values(S.cart).reduce((a,b)=>a+b,0);
+  [['#nCart',cartN],['#nFav',S.fav.length],['#nCmp',S.cmp.length]].forEach(([s,n])=>{const e=$(s);e.hidden=!n;e.textContent=n});
+  $('#bCart').setAttribute('aria-label',T('cart'));$('#bFav').setAttribute('aria-label',T('fav'));$('#bCmp').setAttribute('aria-label',T('compare'));$('#bSearch').setAttribute('aria-label',T('search'));
+  $('#fcols').innerHTML=`
+   <div><h5>${T('fShop')}</h5><ul>${CATS.map(c=>`<li><a href="#c-${c.id}">${esc(L(c.n))}</a></li>`).join('')}</ul></div>
+   <div><h5>${T('fHelp')}</h5><ul><li>${T('fh1')}</li><li>${T('fh2')}</li><li>${T('fh3')}</li><li>${T('fh4')}</li></ul></div>
+   <div><h5>${T('fAbout')}</h5><ul><li>${T('fa1')}</li><li>${T('fa2')}</li><li>${T('fa3')}</li></ul></div>
+   <div><h5>${T('fContacts')}</h5><ul><li>${T('fc1')}</li><li>${T('fc2')}</li>
+     <li><span id="phoneTxt">+7 700 000 00 00</span><button class="copy" data-act="copy" data-txt="+7 700 000 00 00">${T('copy')}</button></li>
+     <li><span>hello@pearstore.kz</span><button class="copy" data-act="copy" data-txt="hello@pearstore.kz">${T('copy')}</button></li></ul></div>`;
+  $('#fcopy').textContent=T('fcopy'); $('#fnote').textContent=T('fnote').replace('{r}',RATE);
+}
+
+/* страницы */
+function viewHome(){
+  const tile=(id,cls)=>{const p=PR[id];return `<div class="tile ${cls||''}">
+    <div class="brand" style="font-size:13px;font-weight:600;color:${cls&&cls.includes('dark')?'#ff9f0a':'var(--warn)'}">${esc(p.brand)}</div>
+    <h2>${esc(p.name.replace(/ \d+ GB$/,''))}</h2><div class="sub">${esc(L(p.t))}</div>
+    <div class="ctas"><a class="btn" href="#p-${p.id}">${T('more')}</a><button class="btn ghost" data-act="add" data-id="${p.id}">${T('buy')} · ${kzt(p.price)}</button></div>
+    <div class="art">${art(p.art,p.color)}</div></div>`};
+  const hits=[...PRODUCTS].sort((a,b)=>b.pop-a.pop).slice(0,6);
+  return `<div class="ribbon">${T('ribbon')}</div>
+  <div class="wrap fade">
+    <section class="hero"><div class="eyebrow">${T('heroEyebrow')}</div><h1>${T('heroTitle')}</h1><p>${T('heroSub')}</p></section>
+    <nav class="shopcats" aria-label="${T('shopByCat')}">${CATS.map(c=>`<a href="#c-${c.id}"><span class="ci">${art(c.art,c.c)}</span>${esc(L(c.n))}</a>`).join('')}</nav>
+    <div class="tiles">
+      ${tile('ip17pro','full dark')}
+      ${tile('mba13')}${tile('ps5pro')}
+      ${tile('oledc4','dark')}${tile('v15')}
+      ${tile('lgf2v5')}${tile('supersonic')}
+    </div>
+    <section class="section"><div class="sechead"><h2>${T('hits')} <span>${T('hitsSub')}</span></h2></div>
+      <div class="grid">${hits.map(card).join('')}</div></section>
+    <section class="section" style="padding-top:0"><div class="sechead"><h2>${T('why')} <span>${T('whySub')}</span></h2></div>
+      <div class="perks">
+        <div class="perk">${IC.card}<h3>${T('p1t')}</h3><p>${T('p1d')}</p></div>
+        <div class="perk">${IC.truck}<h3>${T('p2t')}</h3><p>${T('p2d')}</p></div>
+        <div class="perk">${IC.shield}<h3>${T('p3t')}</h3><p>${T('p3d')}</p></div>
+        <div class="perk">${IC.swap}<h3>${T('p4t')}</h3><p>${T('p4d')}</p></div>
+      </div></section>
+  </div>`;
+}
+
+function filtered(cat){
+  const f=S.filters[cat]||(S.filters[cat]={brands:[],min:'',max:'',sort:'pop'});
+  let list=PRODUCTS.filter(p=>p.cat===cat);
+  if(f.brands.length)list=list.filter(p=>f.brands.includes(p.brand));
+  if(f.min!=='')list=list.filter(p=>p.price>=+f.min);
+  if(f.max!=='')list=list.filter(p=>p.price<=+f.max);
+  const rs=p=>(rating(p.id)||{avg:0}).avg;
+  const srt={pop:(a,b)=>b.pop-a.pop,asc:(a,b)=>a.price-b.price,desc:(a,b)=>b.price-a.price,rate:(a,b)=>rs(b)-rs(a)||b.pop-a.pop,name:(a,b)=>a.name.localeCompare(b.name)};
+  return {f,list:list.sort(srt[f.sort])};
+}
+function viewCat(cat){
+  const c=CAT[cat]; if(!c)return viewHome();
+  const {f,list}=filtered(cat);
+  const brands=[...new Set(PRODUCTS.filter(p=>p.cat===cat).map(p=>p.brand))].sort();
+  return `<div class="wrap fade">
+   <div class="cathead"><div class="crumbs"><a href="#home">${T('home')}</a> › ${esc(L(c.n))}</div><h1>${esc(L(c.n))}</h1><p>${esc(L(c.d))}</p></div>
+   <div class="catlay">
+    <aside class="filters" aria-label="${T('filters')}">
+      <div class="fgroup"><h4>${T('sort')}</h4><select id="fSort" data-cat="${cat}">
+        ${['pop','asc','desc','rate','name'].map(k=>`<option value="${k}" ${f.sort===k?'selected':''}>${T('s'+k[0].toUpperCase()+k.slice(1))}</option>`).join('')}</select></div>
+      <div class="fgroup"><h4>${T('brand')}</h4>${brands.map((b,ix)=>`<label><input type="checkbox" id="fb-${cat}-${ix}" data-brand="${esc(b)}" data-cat="${cat}" ${f.brands.includes(b)?'checked':''}> ${esc(b)}</label>`).join('')}</div>
+      <div class="fgroup"><h4>${T('price')}</h4><div class="prange">
+        <input type="number" id="fMin" data-cat="${cat}" placeholder="${T('min')}" value="${f.min}" inputmode="numeric" min="0" step="10000">
+        <input type="number" id="fMax" data-cat="${cat}" placeholder="${T('max')}" value="${f.max}" inputmode="numeric" min="0" step="10000"></div></div>
+      <div><button class="btn gray" data-act="freset" data-cat="${cat}">${T('reset')}</button></div>
+    </aside>
+    <div><div class="found num">${T('found')}: ${list.length}</div>
+      ${list.length?`<div class="grid">${list.map(card).join('')}</div>`:`<div class="empty">${T('nothing')}</div>`}</div>
+   </div></div>`;
+}
+
+function calcHtml(p){
+  const m=S.term[p.id]||12, over=m===24?.12:0, total=p.price*(1+over);
+  return `<h3>${T('instTitle')}</h3>
+   <div class="terms">${[3,6,12,24].map(k=>`<button class="${k===m?'on':''}" data-act="term" data-id="${p.id}" data-m="${k}">${k} ${T('months')}<small>${k===24?'+12%':'0%'}</small></button>`).join('')}</div>
+   <div class="res num"><span>${T('monthly')}<br><b>${kzt(total/m)}</b></span><span style="text-align:right">${T('overpay')}: ${kzt(total-p.price)}<br>${T('total')}: ${kzt(total)}</span></div>
+   <div class="note" style="margin-top:8px">${T('instNote')}</div>`;
+}
+function revListHtml(pid){
+  const r=allRev(pid);
+  if(!r.length)return `<p style="color:var(--ink2)">${T('noReviews')}</p>`;
+  const loc={ru:'ru-RU',kk:'kk-KZ',en:'en-US'}[S.lang];
+  return r.map(x=>`<div class="rev"><div><span class="stars">${starStr(+x.rating||0)}</span></div>
+    <div class="who">${esc(x.name)}<span class="when">${new Date(x.ts).toLocaleDateString(loc,{day:'numeric',month:'long',year:'numeric'})}</span></div>
+    <p>${esc(x.text)}</p></div>`).join('');
+}
+function viewProduct(id){
+  const p=PR[id]; if(!p)return viewHome();
+  const c=CAT[p.cat], inC=S.cart[p.id], inF=S.fav.includes(p.id), inM=S.cmp.includes(p.id), r=rating(p.id);
+  const same=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==p.id).sort((a,b)=>b.pop-a.pop).slice(0,3);
+  S.stars=0;
+  return `<div class="wrap fade">
+   <div class="crumbs" style="padding-top:22px"><a href="#home">${T('home')}</a> › <a href="#c-${c.id}">${esc(L(c.n))}</a> › ${esc(p.name)}</div>
+   <div class="pp">
+    <div><div class="ppimg">${art(p.art,p.color)}</div></div>
+    <div>
+      <div class="brand" style="color:var(--warn);font-weight:600;font-size:14px">${esc(p.brand)}</div>
+      <h1>${esc(p.name)}</h1>
+      <p class="lead">${esc(L(p.t))}</p>
+      <div class="rate" style="margin-top:10px;font-size:14px;color:var(--ink3)" id="ppRate">${r?`<span class="stars">${starStr(r.avg)}</span> ${r.avg.toFixed(1)} · ${r.n} ${T('reviewsN')}`:T('noReviews')}</div>
+      <p class="about">${esc(L(c.d))}</p>
+      <div class="pricebox"><div><span class="big num">${kzt(p.price)}</span><span class="usd num">${T('priceUsd')} ${usd(p.price)}</span></div>
+        <div class="stock">● ${T('inStock')}</div>
+        <div class="ppacts">
+          <button class="btn lg ${inC?'gray':''}" data-act="add" data-id="${p.id}">${inC?T('inCart'):T('toCart')}</button>
+          <button class="btn lg gray" data-act="fav" data-id="${p.id}" aria-pressed="${inF}" style="flex:0 1 auto;min-width:0;color:${inF?'#e0245e':'inherit'}">${inF?'♥ '+T('inFav'):'♡ '+T('addFav')}</button>
+          <button class="btn lg gray" data-act="cmp" data-id="${p.id}" aria-pressed="${inM}" style="flex:0 1 auto;min-width:0;${inM?'color:var(--accent)':''}">${inM?T('inCmp'):T('addCmp')}</button>
+        </div></div>
+      <div class="calc" id="calc">${calcHtml(p)}</div>
+      <div class="perkline"><div>${IC.truck}<span>${T('deliv')}</span></div><div>${IC.store}<span>${T('pickup')}</span></div><div>${IC.shield}<span>${T('warranty')}</span></div></div>
+    </div>
+   </div>
+   <section class="specs"><h2>${T('specs')}</h2>
+     <table class="spectable"><tbody>${Object.entries(p.sp).map(([k,v])=>`<tr><th>${esc(L(SPEC[k])||k)}</th><td>${esc(tv(v))}</td></tr>`).join('')}
+     <tr><th>${T('brand')}</th><td>${esc(p.brand)}</td></tr><tr><th>${L({ru:'Гарантия',kk:'Кепілдік',en:'Warranty'})}</th><td>12 ${T('months')}</td></tr></tbody></table></section>
+   <section class="reviews"><h2>${T('reviews')}</h2>
+     <div class="revlay"><div id="revlist">${revListHtml(p.id)}</div>
+      <form class="revform" id="revform" data-id="${p.id}" novalidate>
+        <h3>${T('writeReview')}</h3>
+        <label class="field">${T('yourName')}<input id="rvName" maxlength="40" autocomplete="name"></label>
+        <div class="field">${T('rating')}<div class="starpick" id="starpick">${[1,2,3,4,5].map(n=>`<button type="button" data-act="star" data-n="${n}" aria-label="${n}">★</button>`).join('')}</div></div>
+        <label class="field">${T('yourText')}<textarea id="rvText" maxlength="1000"></textarea></label>
+        <button class="btn" type="submit">${T('send')}</button>
+        <div id="rvMsg" aria-live="polite"></div>
+        <div class="note" id="rvNote">${S.db?T('revNote'):T('revNoteLocal')}</div>
+      </form></div></section>
+   <section class="section" style="border-top:1px solid var(--line)"><div class="sechead"><h2>${esc(L(c.n))}.</h2><a href="#c-${c.id}">${T('more')} ›</a></div>
+     <div class="grid">${same.map(card).join('')}</div></section>
+  </div>`;
+}
+function viewFav(){
+  const list=S.fav.map(id=>PR[id]).filter(Boolean);
+  return `<div class="wrap fade"><div class="cathead"><h1>${T('fav')}</h1></div>
+   <div style="padding-bottom:64px">${list.length?`<div class="grid">${list.map(card).join('')}</div>`:`<div class="empty">${T('favEmpty')}</div>`}</div></div>`;
+}
+function viewCompare(){
+  const list=S.cmp.map(id=>PR[id]).filter(Boolean);
+  if(!list.length)return `<div class="wrap fade"><div class="cathead"><h1>${T('compare')}</h1></div><div class="empty" style="margin-bottom:64px">${T('cmpEmpty')}</div></div>`;
+  const keys=[...new Set(list.flatMap(p=>Object.keys(p.sp)))];
+  return `<div class="wrap fade"><div class="cathead" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap"><h1>${T('compare')}</h1><button class="btn gray" data-act="cmpclear">${T('clear')}</button></div>
+   <div class="cmpwrap" style="padding-bottom:64px"><table class="cmp"><thead><tr><th></th>${list.map(p=>`<td><div data-go="p-${p.id}" style="cursor:pointer">${art(p.art,p.color)}</div><div style="font-weight:600">${esc(p.name)}</div><button class="x" data-act="cmp" data-id="${p.id}">${T('remove')}</button></td>`).join('')}</tr></thead>
+   <tbody>
+    <tr><th>${T('price2')}</th>${list.map(p=>`<td class="num"><b>${kzt(p.price)}</b><br><span style="color:var(--ink3)">${usd(p.price)}</span></td>`).join('')}</tr>
+    <tr><th>${T('brand')}</th>${list.map(p=>`<td>${esc(p.brand)}</td>`).join('')}</tr>
+    <tr><th>${T('category')}</th>${list.map(p=>`<td>${esc(L(CAT[p.cat].n))}</td>`).join('')}</tr>
+    ${keys.map(k=>`<tr><th>${esc(L(SPEC[k]))}</th>${list.map(p=>`<td>${p.sp[k]?esc(tv(p.sp[k])):'—'}</td>`).join('')}</tr>`).join('')}
+    <tr><th></th>${list.map(p=>`<td><button class="btn" data-act="add" data-id="${p.id}">${S.cart[p.id]?T('inCart'):T('toCart')}</button></td>`).join('')}</tr>
+   </tbody></table></div></div>`;
+}
+function viewSearch(){
+  const q=S.q.trim().toLowerCase();
+  const list=q?PRODUCTS.filter(p=>[p.name,p.brand,L(CAT[p.cat].n),L(p.t)].join(' ').toLowerCase().includes(q)):[];
+  return `<div class="wrap fade"><div class="cathead"><h1>${T('results')}</h1>${q?`<p>${T('resultsFor')} «${esc(S.q)}» · ${list.length}</p>`:''}</div>
+   <div style="padding-bottom:64px">${list.length?`<div class="grid">${list.map(card).join('')}</div>`:`<div class="empty">${T('nothing')}</div>`}</div></div>`;
+}
+
+function render(keepScroll){
+  const r=S.route; let html;
+  if(r.startsWith('c-'))html=viewCat(r.slice(2));
+  else if(r.startsWith('p-'))html=viewProduct(r.slice(2));
+  else if(r==='fav')html=viewFav();
+  else if(r==='compare')html=viewCompare();
+  else if(r==='search')html=viewSearch();
+  else html=viewHome();
+  const y=window.scrollY;
+  $('#app').innerHTML=html; chrome();
+  if(keepScroll)window.scrollTo(0,y);
+  const title={fav:T('fav'),compare:T('compare'),search:T('results')}[r]||(r.startsWith('c-')&&CAT[r.slice(2)]?L(CAT[r.slice(2)].n):r.startsWith('p-')&&PR[r.slice(2)]?PR[r.slice(2)].name:'');
+  document.title=title?`${title} — Pear Store`:'Pear Store';
+}
+function go(){
+  S.route=(location.hash||'#home').slice(1)||'home';
+  $('#mobmenu').hidden=true;
+  render(); window.scrollTo(0,0);
+}
+
+/* корзина */
+function openCart(){
+  const ids=Object.keys(S.cart).filter(id=>PR[id]);
+  const sum=ids.reduce((s,id)=>s+PR[id].price*S.cart[id],0);
+  $('#overlay').innerHTML=`<div class="scrim" data-act="close"></div>
+   <aside class="drawer" role="dialog" aria-modal="true" aria-label="${T('cart')}">
+    <div class="dhead"><h2>${T('cart')}</h2><button class="ib" data-act="close" aria-label="${T('close')}">✕</button></div>
+    <div class="dbody">${ids.length?ids.map(id=>{const p=PR[id];return `<div class="ci-row"><div class="th">${art(p.art,p.color)}</div><div>
+      <h4>${esc(p.name)}</h4><div class="p num">${kzt(p.price*S.cart[id])} <span style="color:var(--ink3);font-size:13px">${usd(p.price*S.cart[id])}</span></div>
+      <div class="qty"><button data-act="dec" data-id="${id}" aria-label="−">−</button><span class="num">${S.cart[id]}</span><button data-act="inc" data-id="${id}" aria-label="+">+</button><button class="rm" data-act="rm" data-id="${id}">${T('remove')}</button></div></div></div>`}).join(''):`<p style="color:var(--ink2);padding:30px 0;text-align:center">${T('cartEmpty')}</p>`}</div>
+    ${ids.length?`<div class="dfoot"><div class="total num"><span>${T('sum')}</span><span style="text-align:right"><b>${kzt(sum)}</b><br><span style="color:var(--ink3);font-size:14px">${usd(sum)} · ${T('installFrom').toLowerCase()} ${kzt(sum/12)}${T('perMonth')}</span></span></div>
+      <button class="btn lg" data-act="checkout">${T('checkout')}</button></div>`:''}
+   </aside>`;
+}
+function openCheckout(){
+  const ids=Object.keys(S.cart).filter(id=>PR[id]);
+  const sum=ids.reduce((s,id)=>s+PR[id].price*S.cart[id],0);
+  const cities=['Алматы','Астана','Шымкент','Караганда','Актобе','Павлодар','Усть-Каменогорск','Кокшетау','Атырау','Костанай'];
+  $('#overlay').innerHTML=`<div class="scrim" data-act="close"></div>
+   <div class="modal" data-act="closeout"><div class="mbox" role="dialog" aria-modal="true" aria-label="${T('ckTitle')}">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2>${T('ckTitle')}</h2><button class="ib" data-act="close" aria-label="${T('close')}">✕</button></div>
+    <form id="ckform" novalidate>
+      <div class="row2"><label class="field">${T('name')}<input id="ckName" autocomplete="name" value="Айгерим Садыкова"></label>
+      <label class="field">${T('phone')}<input id="ckPhone" type="tel" autocomplete="tel" placeholder="+7 7__ ___ __ __"></label></div>
+      <div class="row2"><label class="field">${T('city')}<select id="ckCity">${cities.map(c=>`<option>${c}</option>`).join('')}</select></label>
+      <label class="field">${T('address')}<input id="ckAddr" autocomplete="street-address"></label></div>
+      <div class="field">${T('delivery')}<div class="seg"><label><input type="radio" name="dl" id="dl1" checked>${T('dCourier')}</label><label><input type="radio" name="dl" id="dl2">${T('dPickup')}</label></div></div>
+      <div class="field">${T('payment')}<div class="seg"><label><input type="radio" name="pm" id="pm1" checked>${T('payCard')}</label><label><input type="radio" name="pm" id="pm2">${T('payInst')}</label><label><input type="radio" name="pm" id="pm3">${T('payCash')}</label></div></div>
+      <label class="field">${T('comment')}<textarea id="ckCom" style="min-height:64px"></textarea></label>
+      <div class="total num"><span>${T('total')}</span><b>${kzt(sum)}</b></div>
+      <button class="btn lg" type="submit">${T('placeOrder')}</button>
+      <div id="ckMsg" aria-live="polite"></div>
+      <div class="note">${T('demoNote')}</div>
+    </form></div></div>`;
+}
+function closeOverlay(){$('#overlay').innerHTML=''}
+
+let tt;function toast(m){const e=$('#toast');e.textContent=m;e.hidden=false;clearTimeout(tt);tt=setTimeout(()=>e.hidden=true,1900)}
+function refresh(){ // перерисовать текущую страницу без прокрутки и сохранить
+  save(); render(true);
+}
+
+/* события */
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if(g){location.hash=g.dataset.go;return}
+  const a=e.target.closest('[data-act]'); if(!a)return;
+  const id=a.dataset.id, act=a.dataset.act;
+  if(act==='closeout'&&e.target!==a)return;
+  switch(act){
+    case'add': if(!S.cart[id]){S.cart[id]=1;toast(T('added'))} else openCart(); refresh(); break;
+    case'fav': {const i=S.fav.indexOf(id); if(i<0){S.fav.push(id);toast(T('favAdded'))}else S.fav.splice(i,1); refresh(); break;}
+    case'cmp': {const i=S.cmp.indexOf(id); if(i<0){if(S.cmp.length>=4){toast(T('cmpMax'));break}S.cmp.push(id);toast(T('cmpAdded'))}else S.cmp.splice(i,1); refresh(); break;}
+    case'cmpclear': S.cmp=[]; refresh(); break;
+    case'inc': S.cart[id]++; save(); chrome(); openCart(); break;
+    case'dec': if(--S.cart[id]<=0)delete S.cart[id]; save(); render(true); openCart(); break;
+    case'rm': delete S.cart[id]; save(); render(true); openCart(); break;
+    case'close': case'closeout': closeOverlay(); break;
+    case'checkout': openCheckout(); break;
+    case'term': S.term[id]=+a.dataset.m; $('#calc').innerHTML=calcHtml(PR[id]); break;
+    case'star': S.stars=+a.dataset.n; document.querySelectorAll('#starpick button').forEach(b=>b.classList.toggle('on',+b.dataset.n<=S.stars)); break;
+    case'freset': S.filters[a.dataset.cat]={brands:[],min:'',max:'',sort:'pop'}; render(true); break;
+    case'copy': {const txt=a.dataset.txt; const done=()=>toast(T('copied'));
+      try{navigator.clipboard.writeText(txt).then(done,()=>selectText(a.previousElementSibling))}catch(err){selectText(a.previousElementSibling)} break;}
+  }
+});
+function selectText(el){try{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}}
+document.addEventListener('change',e=>{
+  const t=e.target, cat=t.dataset&&t.dataset.cat; if(!cat)return;
+  const f=S.filters[cat];
+  if(t.id==='fSort')f.sort=t.value;
+  else if(t.dataset.brand){const b=t.dataset.brand;t.checked?f.brands.push(b):f.brands.splice(f.brands.indexOf(b),1)}
+  else if(t.id==='fMin')f.min=t.value;
+  else if(t.id==='fMax')f.max=t.value;
+  render(true);
+});
+document.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const f=e.target;
+  if(f.id==='revform'){
+    const name=$('#rvName').value.trim(), text=$('#rvText').value.trim(), msg=$('#rvMsg');
+    if(!name||!text||!S.stars){msg.className='formerr';msg.textContent=T('revNeed');return}
+    const rv={pid:f.dataset.id,name:name.slice(0,40),rating:S.stars,text:text.slice(0,1000),ts:Date.now()};
+    let shared=false;
+    if(S.db){try{await S.db.collection('reviews').add(rv);shared=true}catch(err){shared=false}}
+    if(!shared){S.localRev.push(rv);LS.set('rev',S.localRev)}
+    else if(!S.sharedRev.some(x=>x.ts===rv.ts&&x.name===rv.name))S.sharedRev.push(rv);
+    $('#rvName').value='';$('#rvText').value='';S.stars=0;document.querySelectorAll('#starpick button').forEach(b=>b.classList.remove('on'));
+    msg.className='formmsg';msg.textContent=shared?T('revShared'):T('revLocal');
+    updateReviews();
+  }
+  if(f.id==='ckform'){
+    const name=$('#ckName').value.trim(),phone=$('#ckPhone').value.trim(),m=$('#ckMsg');
+    if(!name||phone.replace(/\D/g,'').length<10){m.className='formerr';m.textContent=T('ckNeed');return}
+    const n='PS-'+String(Date.now()).slice(-6);
+    S.cart={}; save(); render(true);
+    $('.mbox').innerHTML=`<div class="done">${IC.check}<h2 style="margin-top:12px">${T('ckDone')}</h2><p style="color:var(--ink2)">${T('ckDoneSub').replace('{n}',n)}</p><button class="btn lg" data-act="close">${T('close')}</button><p class="note">${T('demoNote')}</p></div>`;
+  }
+});
+function updateReviews(){
+  if(!S.route.startsWith('p-'))return render(true);
+  const pid=S.route.slice(2), l=$('#revlist'), r=rating(pid), pr=$('#ppRate');
+  if(l)l.innerHTML=revListHtml(pid);
+  if(pr)pr.innerHTML=r?`<span class="stars">${starStr(r.avg)}</span> ${r.avg.toFixed(1)} · ${r.n} ${T('reviewsN')}`:T('noReviews');
+}
+
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{S.lang=b.dataset.l;save();render(true)}));
+$('#bCart').addEventListener('click',openCart);
+$('#bMenu').addEventListener('click',()=>{$('#mobmenu').hidden=!$('#mobmenu').hidden});
+$('#bSearch').addEventListener('click',()=>{const sb=$('#searchbar');sb.hidden=!sb.hidden;if(!sb.hidden)$('#q').focus()});
+$('#qClose').addEventListener('click',()=>{$('#searchbar').hidden=true});
+$('#q').addEventListener('input',e=>{S.q=e.target.value;if(S.route!=='search'){location.hash='search'}else render(true)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeOverlay();$('#searchbar').hidden=true}});
+window.addEventListener('hashchange',go);
+
+/* общий доступ к отзывам */
+(async()=>{
+  try{
+    if(!window.claude||!window.claude.use)return;
+    const db=await window.claude.use('db'); if(!db)return;
+    S.db=db; const note=$('#rvNote'); if(note)note.textContent=T('revNote');
+    db.collection('reviews').onSnapshot(snap=>{
+      S.sharedRev=snap.docs.map(d=>d.data()).filter(x=>x&&x.pid&&x.name&&x.text);
+      if(S.route.startsWith('p-'))updateReviews();
+      else if(!document.activeElement||!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))render(true);
+    },()=>{});
+  }catch(e){}
+})();
+
+go();
+})();
+
+</script>
+
+</body>
+</html>
